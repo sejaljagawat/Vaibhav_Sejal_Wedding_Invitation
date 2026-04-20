@@ -63,7 +63,7 @@ export function Footer() {
             fontStyle: "italic",
           }}
         >
-          May 8, 2026
+          November 21, 2026
         </p>
       </motion.div>
     </footer>

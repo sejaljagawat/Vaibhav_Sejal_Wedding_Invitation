@@ -6,7 +6,7 @@ import { MapPin, Calendar, Clock } from "lucide-react"
 const events = [
   {
     name: "Sangeet",
-    date: "May 7, 2026",
+    date: "November 20, 2026",
     time: "6:00 PM onwards",
     venue: "Celebration Hall, Mumbai",
     description: "An evening of music, dance, and celebration",
@@ -14,7 +14,7 @@ const events = [
   },
   {
     name: "Wedding Ceremony",
-    date: "May 8, 2026",
+    date: "November 21, 2026",
     time: "9:00 AM onwards",
     venue: "Grand Palace Banquets, Mumbai",
     description: "The sacred union of two souls",
@@ -22,7 +22,7 @@ const events = [
   },
   {
     name: "Reception",
-    date: "May 10, 2026",
+    date: "November 22, 2026",
     time: "7:00 PM onwards",
     venue: "Royal Gardens, Mumbai",
     description: "Join us for dinner and festivities",
