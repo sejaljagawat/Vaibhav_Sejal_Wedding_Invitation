@@ -316,8 +316,8 @@ export function SaveTheDate() {
         style={
           allRevealed
             ? {
-                animation: "gentleHeartBeat 3s infinite ease-in-out",
-              }
+              animation: "gentleHeartBeat 3s infinite ease-in-out",
+            }
             : {}
         }
       >
