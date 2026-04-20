@@ -1,336 +1,400 @@
-"use client";
+"use client"
 
-import { useRef, useEffect, useState, useCallback } from "react";
-import { motion } from "framer-motion";
-import confetti from "canvas-confetti";
+import { useEffect, useRef, useState, useCallback } from "react"
+import { motion } from "framer-motion"
+import confetti from "canvas-confetti"
+
+// Heart shape SVG path for mask
+const HEART_MASK = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 185' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M100 185 C100 185, 200 125, 200 70 C200 23, 157 -10, 121.5 15 C100 31, 100 31, 100 31 C100 31, 100 31, 78.5 15 C43 -10, 0 23, 0 70 C0 125, 100 185, 100 185 Z' fill='black'/%3E%3C/svg%3E")`
 
 interface ScratchHeartProps {
-  id: number;
-  onReveal: () => void;
+  label: string
+  value: string
+  onReveal: () => void
 }
 
-function ScratchHeart({ id, onReveal }: ScratchHeartProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isRevealed, setIsRevealed] = useState(false);
-  const isDrawingRef = useRef(false);
-
-  const getMousePos = useCallback((e: MouseEvent | TouchEvent, canvas: HTMLCanvasElement) => {
-    const rect = canvas.getBoundingClientRect();
-    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
-    const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
-    return { x: clientX - rect.left, y: clientY - rect.top };
-  }, []);
-
-  const checkProgress = useCallback((ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) => {
-    const sampleRate = 32;
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const pixels = imageData.data;
-    let transparentPixels = 0;
-    for (let i = 3; i < pixels.length; i += sampleRate) {
-      if (pixels[i] < 128) transparentPixels++;
-    }
-    const totalPixels = pixels.length / sampleRate;
-    return (transparentPixels / totalPixels) * 100 > 45;
-  }, []);
+function ScratchHeart({ label, value, onReveal }: ScratchHeartProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const isDrawingRef = useRef(false)
+  const revealedRef = useRef(false)
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const container = containerRef.current;
-    if (!canvas || !container || isRevealed) return;
+    const canvas = canvasRef.current
+    const container = containerRef.current
+    if (!canvas || !container) return
 
-    const ctx = canvas.getContext("2d", { willReadFrequently: true });
-    if (!ctx) return;
+    const ctx = canvas.getContext("2d", { willReadFrequently: true })
+    if (!ctx) return
 
-    const rect = container.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const dpr = window.devicePixelRatio || 1;
-    
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
-    ctx.scale(dpr, dpr);
+    const rect = container.getBoundingClientRect()
+    const width = rect.width
+    const height = rect.height
+    const dpr = window.devicePixelRatio || 1
 
-    // Warm Terracotta fill for scratch layer
-    ctx.fillStyle = "#B85940";
-    ctx.fillRect(0, 0, width, height);
+    canvas.width = width * dpr
+    canvas.height = height * dpr
+    ctx.scale(dpr, dpr)
+
+    // Terracotta fill for scratch layer
+    ctx.fillStyle = "#B85940"
+    ctx.fillRect(0, 0, width, height)
 
     // Scratch indication text
-    ctx.fillStyle = "rgba(255,255,255,0.7)";
-    ctx.font = "12px sans-serif";
-    ctx.textAlign = "center";
-    ctx.fillText("SCRATCH", width / 2, height / 2 + 4);
+    ctx.fillStyle = "rgba(255,255,255,0.7)"
+    ctx.font = "bold 10px 'Tenor Sans', sans-serif"
+    ctx.textAlign = "center"
+    ctx.fillText("SCRATCH", width / 2, height / 2 + 4)
+
+    const getMousePos = (e: MouseEvent | TouchEvent) => {
+      const rect = canvas.getBoundingClientRect()
+      const clientX = "touches" in e ? e.touches[0].clientX : e.clientX
+      const clientY = "touches" in e ? e.touches[0].clientY : e.clientY
+      return { x: clientX - rect.left, y: clientY - rect.top }
+    }
 
     const scratch = (e: MouseEvent | TouchEvent) => {
-      if (!isDrawingRef.current || isRevealed) return;
-      if (e.cancelable && e.type.startsWith("touch")) e.preventDefault();
-      
-      const pos = getMousePos(e, canvas);
-      ctx.globalCompositeOperation = "destination-out";
-      ctx.beginPath();
-      ctx.arc(pos.x, pos.y, width * 0.22, 0, Math.PI * 2);
-      ctx.fill();
+      if (!isDrawingRef.current || revealedRef.current) return
+      if (e.cancelable && e.type.startsWith("touch")) e.preventDefault()
 
-      if (Math.random() > 0.2 && checkProgress(ctx, canvas)) {
-        setIsRevealed(true);
-        canvas.style.opacity = "0";
-        setTimeout(() => {
-          canvas.style.display = "none";
-          onReveal();
-        }, 500);
+      const pos = getMousePos(e)
+      ctx.globalCompositeOperation = "destination-out"
+      ctx.beginPath()
+      ctx.arc(pos.x, pos.y, width * 0.22, 0, Math.PI * 2)
+      ctx.fill()
+
+      if (Math.random() > 0.2) checkProgress()
+    }
+
+    const checkProgress = () => {
+      if (revealedRef.current) return
+      const sampleRate = 32
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+      const pixels = imageData.data
+      let transparentPixels = 0
+
+      for (let i = 3; i < pixels.length; i += sampleRate) {
+        if (pixels[i] < 128) transparentPixels++
       }
-    };
 
-    const handleStart = (e: MouseEvent | TouchEvent) => {
-      isDrawingRef.current = true;
-      scratch(e);
-    };
+      const totalPixels = pixels.length / sampleRate
+      if ((transparentPixels / totalPixels) * 100 > 45) {
+        revealAll()
+      }
+    }
 
-    const handleEnd = () => {
-      isDrawingRef.current = false;
-    };
+    const revealAll = () => {
+      revealedRef.current = true
+      canvas.style.opacity = "0"
+      setTimeout(() => {
+        canvas.style.display = "none"
+        onReveal()
+      }, 1000)
+    }
 
-    canvas.addEventListener("mousedown", handleStart);
-    canvas.addEventListener("touchstart", handleStart, { passive: false });
-    window.addEventListener("mouseup", handleEnd);
-    window.addEventListener("touchend", handleEnd);
-    canvas.addEventListener("mousemove", scratch);
-    canvas.addEventListener("touchmove", scratch, { passive: false });
+    const handleMouseDown = (e: MouseEvent) => {
+      isDrawingRef.current = true
+      scratch(e)
+    }
+    const handleTouchStart = (e: TouchEvent) => {
+      isDrawingRef.current = true
+      scratch(e)
+    }
+    const handleMouseUp = () => {
+      isDrawingRef.current = false
+    }
+    const handleTouchEnd = () => {
+      isDrawingRef.current = false
+    }
+
+    canvas.addEventListener("mousedown", handleMouseDown)
+    canvas.addEventListener("touchstart", handleTouchStart, { passive: false })
+    window.addEventListener("mouseup", handleMouseUp)
+    window.addEventListener("touchend", handleTouchEnd)
+    canvas.addEventListener("mousemove", scratch as EventListener)
+    canvas.addEventListener("touchmove", scratch as EventListener, { passive: false })
 
     return () => {
-      canvas.removeEventListener("mousedown", handleStart);
-      canvas.removeEventListener("touchstart", handleStart);
-      window.removeEventListener("mouseup", handleEnd);
-      window.removeEventListener("touchend", handleEnd);
-      canvas.removeEventListener("mousemove", scratch);
-      canvas.removeEventListener("touchmove", scratch);
-    };
-  }, [isRevealed, getMousePos, checkProgress, onReveal]);
+      canvas.removeEventListener("mousedown", handleMouseDown)
+      canvas.removeEventListener("touchstart", handleTouchStart)
+      window.removeEventListener("mouseup", handleMouseUp)
+      window.removeEventListener("touchend", handleTouchEnd)
+      canvas.removeEventListener("mousemove", scratch as EventListener)
+      canvas.removeEventListener("touchmove", scratch as EventListener)
+    }
+  }, [onReveal])
 
   return (
     <div
       ref={containerRef}
-      className="relative w-20 h-20 md:w-24 md:h-24"
+      className="relative cursor-crosshair touch-none transition-all duration-500"
+      style={{
+        width: "30vw",
+        maxWidth: "120px",
+        aspectRatio: "1.1 / 1",
+        maskImage: HEART_MASK,
+        maskSize: "contain",
+        maskRepeat: "no-repeat",
+        maskPosition: "center",
+        WebkitMaskImage: HEART_MASK,
+        WebkitMaskSize: "contain",
+        WebkitMaskRepeat: "no-repeat",
+        WebkitMaskPosition: "center",
+        background: "#FDF0E8",
+      }}
     >
-      {/* Heart shape background */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <svg
-          viewBox="0 0 100 100"
-          className="w-full h-full"
+      {/* Hidden content */}
+      <div className="absolute inset-0 flex flex-col justify-center items-center z-[1]">
+        <span
+          style={{
+            fontFamily: "'Tenor Sans', sans-serif",
+            fontSize: "0.55rem",
+            letterSpacing: "0.15em",
+            color: "#9E7060",
+            textTransform: "uppercase",
+            marginBottom: "2px",
+          }}
         >
-          <defs>
-            <linearGradient id={`heartGradient${id}`} x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#C9963E" />
-              <stop offset="100%" stopColor="#E8C07A" />
-            </linearGradient>
-          </defs>
-          <path
-            d="M50 88.9C48.5 88.9 47 88.3 45.8 87.2C39.7 81.6 33.8 76.3 28.6 71.5L28.4 71.3C17.3 61.2 7.7 52.5 1.5 44C-5.4 34.5 -2.3 21.7 7.2 12.6C12.6 7.4 19.5 4.5 27 4.5C32.4 4.5 37.4 6.1 41.8 9.2C44.1 10.8 46.1 12.8 47.9 15.1C49.7 12.8 51.8 10.8 54.1 9.2C58.5 6.1 63.5 4.5 68.9 4.5C76.4 4.5 83.3 7.4 88.7 12.6C98.2 21.7 101.3 34.5 94.4 44C88.2 52.5 78.6 61.2 67.5 71.3L67.3 71.5C62.1 76.3 56.2 81.6 50.1 87.2C48.9 88.3 47.4 88.9 50 88.9Z"
-            fill={`url(#heartGradient${id})`}
-            transform="translate(2, 5) scale(0.95)"
-          />
-        </svg>
+          {label}
+        </span>
+        <span
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: "2rem",
+            fontWeight: 600,
+            color: "#B85940",
+            lineHeight: 1,
+            textShadow: "0 2px 10px rgba(255,255,255,0.8)",
+          }}
+        >
+          {value}
+        </span>
       </div>
-      {/* Scratch canvas overlay */}
+
+      {/* Scratch canvas */}
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 w-full h-full cursor-pointer transition-opacity duration-500"
-        style={{ 
-          touchAction: "none",
-          clipPath: "path('M50 88.9C48.5 88.9 47 88.3 45.8 87.2C39.7 81.6 33.8 76.3 28.6 71.5L28.4 71.3C17.3 61.2 7.7 52.5 1.5 44C-5.4 34.5 -2.3 21.7 7.2 12.6C12.6 7.4 19.5 4.5 27 4.5C32.4 4.5 37.4 6.1 41.8 9.2C44.1 10.8 46.1 12.8 47.9 15.1C49.7 12.8 51.8 10.8 54.1 9.2C58.5 6.1 63.5 4.5 68.9 4.5C76.4 4.5 83.3 7.4 88.7 12.6C98.2 21.7 101.3 34.5 94.4 44C88.2 52.5 78.6 61.2 67.5 71.3L67.3 71.5C62.1 76.3 56.2 81.6 50.1 87.2C48.9 88.3 47.4 88.9 50 88.9Z')",
-          transform: "scale(0.95) translate(2%, 5%)"
-        }}
+        className="absolute inset-0 z-[2] w-full h-full transition-opacity duration-1000"
       />
     </div>
-  );
+  )
 }
 
 export function SaveTheDate() {
-  const [revealedCount, setRevealedCount] = useState(0);
-  const [allRevealed, setAllRevealed] = useState(false);
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    mins: 0,
-    secs: 0,
-  });
+  const [revealedCount, setRevealedCount] = useState(0)
+  const [allRevealed, setAllRevealed] = useState(false)
+  const countdownRef = useRef<NodeJS.Timeout | null>(null)
+  const [countdown, setCountdown] = useState({ days: 0, hours: 0, mins: 0, secs: 0 })
 
-  const handleHeartReveal = useCallback(() => {
-    setRevealedCount((prev) => {
-      const newCount = prev + 1;
-      if (newCount === 3) {
-        setAllRevealed(true);
-        // Trigger confetti
-        setTimeout(() => {
-          const duration = 3000;
-          const end = Date.now() + duration;
-          const colors = ["#B85940", "#C9963E", "#E8C07A", "#FFFFFF"];
-
-          const frame = () => {
-            confetti({
-              particleCount: 5,
-              angle: 60,
-              spread: 55,
-              origin: { x: 0, y: 0.6 },
-              colors: colors,
-              zIndex: 9999,
-            });
-            confetti({
-              particleCount: 5,
-              angle: 120,
-              spread: 55,
-              origin: { x: 1, y: 0.6 },
-              colors: colors,
-              zIndex: 9999,
-            });
-
-            if (Date.now() < end) {
-              requestAnimationFrame(frame);
-            }
-          };
-          frame();
-        }, 300);
-      }
-      return newCount;
-    });
-  }, []);
+  const handleReveal = useCallback(() => {
+    setRevealedCount((prev) => prev + 1)
+  }, [])
 
   useEffect(() => {
-    const weddingDate = new Date("2026-05-08T00:00:00");
+    if (revealedCount === 3 && !allRevealed) {
+      setAllRevealed(true)
 
-    const updateTimer = () => {
-      const now = new Date();
-      const diff = weddingDate.getTime() - now.getTime();
+      // Trigger confetti
+      setTimeout(() => {
+        const duration = 3000
+        const end = Date.now() + duration
+        const colors = ["#B85940", "#C9963E", "#E8C07A", "#FFFFFF"]
 
-      if (diff > 0) {
-        setTimeLeft({
-          days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-          mins: Math.floor((diff / (1000 * 60)) % 60),
-          secs: Math.floor((diff / 1000) % 60),
-        });
+        const frame = () => {
+          confetti({
+            particleCount: 5,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0, y: 0.6 },
+            colors: colors,
+            zIndex: 9999,
+          })
+          confetti({
+            particleCount: 5,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1, y: 0.6 },
+            colors: colors,
+            zIndex: 9999,
+          })
+
+          if (Date.now() < end) {
+            requestAnimationFrame(frame)
+          }
+        }
+        frame()
+      }, 800)
+
+      // Start countdown
+      const weddingDate = new Date("November 21, 2026 00:00:00").getTime()
+      const updateTimer = () => {
+        const now = new Date().getTime()
+        const distance = weddingDate - now
+
+        if (distance < 0) {
+          setCountdown({ days: 0, hours: 0, mins: 0, secs: 0 })
+          return
+        }
+
+        setCountdown({
+          days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          mins: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+          secs: Math.floor((distance % (1000 * 60)) / 1000),
+        })
       }
-    };
 
-    updateTimer();
-    const interval = setInterval(updateTimer, 1000);
-    return () => clearInterval(interval);
-  }, []);
+      updateTimer()
+      countdownRef.current = setInterval(updateTimer, 1000)
+    }
+
+    return () => {
+      if (countdownRef.current) clearInterval(countdownRef.current)
+    }
+  }, [revealedCount, allRevealed])
+
+  const formatNumber = (n: number) => (n < 10 ? `0${n}` : `${n}`)
 
   return (
-    <section id="save-the-date" className="py-24 px-4 bg-gradient-to-b from-background via-secondary/20 to-background">
-      <div className="max-w-4xl mx-auto text-center">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-lg font-sans text-muted-foreground uppercase tracking-widest mb-4"
+    <section id="save-the-date" className="py-20 px-6 text-center" style={{ background: "#FFF8F3" }}>
+      {/* Section Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 25 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2 }}
+        viewport={{ once: true }}
+      >
+        <span
+          style={{
+            fontFamily: "'Tenor Sans', sans-serif",
+            fontSize: "0.65rem",
+            letterSpacing: "0.35em",
+            textTransform: "uppercase",
+            color: "#C9963E",
+            display: "block",
+            marginBottom: "0.75rem",
+          }}
         >
           Save The Date
-        </motion.p>
-
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="text-4xl md:text-5xl font-serif mb-4"
+        </span>
+        <h2
+          style={{
+            fontFamily: "'Great Vibes', cursive",
+            fontSize: "clamp(3rem, 10vw, 5rem)",
+            lineHeight: 1.1,
+            color: "#B85940",
+          }}
         >
           Reveal Our
-          <span className="font-script text-gold-dark ml-2">Big Day</span>
-        </motion.h2>
+          <br />
+          Big Day
+        </h2>
+      </motion.div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="text-muted-foreground font-serif mb-12"
-        >
-          Scratch all three hearts to unlock the date
-        </motion.p>
+      <motion.p
+        initial={{ opacity: 0, y: 25 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, delay: 0.2 }}
+        viewport={{ once: true }}
+        className="mt-4 mb-4"
+        style={{
+          fontStyle: "italic",
+          color: "#9E7060",
+          fontSize: "1.1rem",
+        }}
+      >
+        Scratch the hearts to reveal
+      </motion.p>
 
-        {/* Scratch Hearts */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          className={`flex justify-center items-center gap-6 md:gap-10 mb-8 transition-all duration-500 ${
-            allRevealed ? "scale-110" : ""
-          }`}
-        >
-          <ScratchHeart id={1} onReveal={handleHeartReveal} />
-          <ScratchHeart id={2} onReveal={handleHeartReveal} />
-          <ScratchHeart id={3} onReveal={handleHeartReveal} />
-        </motion.div>
+      {/* Hearts Row */}
+      <motion.div
+        initial={{ opacity: 0, y: 25 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, delay: 0.2 }}
+        viewport={{ once: true }}
+        className="flex justify-center items-center gap-4 w-full max-w-[440px] mx-auto mt-8"
+        style={
+          allRevealed
+            ? {
+                animation: "gentleHeartBeat 3s infinite ease-in-out",
+              }
+            : {}
+        }
+      >
+        <ScratchHeart label="DAY" value="21" onReveal={handleReveal} />
+        <ScratchHeart label="MONTH" value="Nov" onReveal={handleReveal} />
+        <ScratchHeart label="YEAR" value="2026" onReveal={handleReveal} />
+      </motion.div>
 
-        {/* Revealed Date */}
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ 
-            opacity: allRevealed ? 1 : 0, 
-            height: allRevealed ? "auto" : 0 
-          }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="overflow-hidden mb-12"
-        >
-          <div className="py-8 px-6 bg-gradient-to-r from-transparent via-gold/10 to-transparent rounded-lg">
-            <p className="text-2xl md:text-3xl font-serif text-foreground mb-2">
-              Friday, May 8th, 2026
-            </p>
-            <p className="text-lg font-script text-gold-dark">
-              The start of our forever...
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Progress indicator */}
-        {!allRevealed && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            className="flex justify-center gap-2 mb-12"
+      {/* Surprise Message */}
+      <motion.div
+        className="mt-8"
+        initial={{ opacity: 0, y: 15 }}
+        animate={allRevealed ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 1.2 }}
+      >
+        {allRevealed && (
+          <p
+            style={{
+              fontFamily: "'Great Vibes', cursive",
+              fontSize: "2.8rem",
+              color: "#B85940",
+            }}
           >
-            {[0, 1, 2].map((i) => (
-              <div
-                key={i}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  i < revealedCount ? "bg-gold scale-125" : "bg-muted"
-                }`}
-              />
-            ))}
-          </motion.div>
+            The start of a beautiful journey...
+          </p>
         )}
+      </motion.div>
 
-        {/* Countdown */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-          className="flex flex-wrap justify-center gap-4 md:gap-6"
-        >
-          {[
-            { value: timeLeft.days, label: "Days" },
-            { value: timeLeft.hours, label: "Hrs" },
-            { value: timeLeft.mins, label: "Mins" },
-            { value: timeLeft.secs, label: "Secs" },
-          ].map((item) => (
-            <div
-              key={item.label}
-              className="flex flex-col items-center bg-card p-4 rounded-lg shadow-md min-w-[70px] md:min-w-[80px] border border-border/50"
+      {/* Countdown */}
+      <motion.div
+        className="flex justify-center gap-3 mt-6 flex-wrap"
+        initial={{ opacity: 0, y: 15 }}
+        animate={allRevealed ? { opacity: 1, y: 0 } : { opacity: 0, pointerEvents: "none" }}
+        transition={{ duration: 1.2 }}
+      >
+        {[
+          { value: countdown.days, label: "Days" },
+          { value: countdown.hours, label: "Hrs" },
+          { value: countdown.mins, label: "Mins" },
+          { value: countdown.secs, label: "Secs" },
+        ].map((item) => (
+          <div
+            key={item.label}
+            className="flex flex-col items-center justify-center rounded-xl min-w-[70px]"
+            style={{
+              background: "#FFFFFF",
+              border: "1px solid #EEDDD3",
+              padding: "0.8rem 1rem",
+              boxShadow: "0 20px 60px -10px rgba(92,34,51,0.12)",
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "1.8rem",
+                fontWeight: 600,
+                color: "#B85940",
+                lineHeight: 1,
+              }}
             >
-              <span className="text-2xl md:text-4xl font-serif font-bold text-primary">
-                {String(item.value).padStart(2, "0")}
-              </span>
-              <span className="text-xs md:text-sm font-sans text-muted-foreground">{item.label}</span>
-            </div>
-          ))}
-        </motion.div>
-      </div>
+              {formatNumber(item.value)}
+            </span>
+            <small
+              style={{
+                fontFamily: "'Tenor Sans', sans-serif",
+                fontSize: "0.55rem",
+                letterSpacing: "0.15em",
+                color: "#9E7060",
+                textTransform: "uppercase",
+                marginTop: "0.3rem",
+              }}
+            >
+              {item.label}
+            </small>
+          </div>
+        ))}
+      </motion.div>
     </section>
-  );
+  )
 }
