@@ -1,70 +1,74 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Heart } from "lucide-react"
 
 export function Footer() {
   return (
     <footer
-      className="py-16 px-4 text-center"
+      className="min-h-dvh flex flex-col justify-center items-center px-6 py-16 text-center"
       style={{ background: "#5C2233", color: "white" }}
     >
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 25 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 1.2 }}
+        className="w-full"
       >
-        <h2
+        <span
           style={{
-            fontFamily: "var(--font-script)",
-            fontSize: "clamp(3rem, 12vw, 5rem)",
+            fontFamily: "'Great Vibes', cursive",
+            fontSize: "clamp(5rem, 18vw, 8rem)",
             color: "#E8C07A",
-            lineHeight: 1.2,
+            display: "block",
+            lineHeight: 1.1,
           }}
         >
           Vaibhav
-        </h2>
-        <span
-          style={{
-            fontFamily: "var(--font-script)",
-            fontSize: "clamp(2rem, 8vw, 3rem)",
-            color: "#C9963E",
-            display: "block",
-            margin: "0.5rem 0",
-          }}
-        >
-          &
-        </span>
-        <h2
-          style={{
-            fontFamily: "var(--font-script)",
-            fontSize: "clamp(3rem, 12vw, 5rem)",
-            color: "#E8C07A",
-            lineHeight: 1.2,
-          }}
-        >
+          <br />
+          <span
+            style={{
+              fontSize: "clamp(3rem, 10vw, 5rem)",
+              color: "#C9963E",
+              display: "block",
+              margin: "0.2rem 0",
+            }}
+          >
+            &
+          </span>
           Sejal
-        </h2>
+        </span>
 
         {/* Divider */}
-        <div className="flex items-center justify-center gap-4 mt-8">
-          <div className="h-px w-16" style={{ background: "rgba(232,192,122,0.4)" }} />
-          <Heart size={16} style={{ color: "#E8C07A" }} fill="#E8C07A" />
-          <div className="h-px w-16" style={{ background: "rgba(232,192,122,0.4)" }} />
+        <div className="flex items-center justify-center gap-4 mt-8 opacity-40">
+          <div className="h-px w-15" style={{ background: "#E8C07A" }} />
+          <span style={{ color: "#E8C07A", fontSize: "1.1rem" }}>&#9829;</span>
+          <div className="h-px w-15" style={{ background: "#E8C07A" }} />
         </div>
+      </motion.div>
 
-        <p
-          className="mt-8"
-          style={{
-            fontFamily: "var(--font-serif)",
-            fontSize: "1rem",
-            color: "rgba(255,255,255,0.7)",
-            fontStyle: "italic",
-          }}
+      <motion.div
+        initial={{ opacity: 0, y: 25 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.2, delay: 0.2 }}
+        className="mt-16"
+        style={{
+          fontFamily: "'Tenor Sans', sans-serif",
+          fontSize: "0.75rem",
+          letterSpacing: "0.15em",
+          color: "rgba(255,255,255,0.6)",
+        }}
+      >
+        MADE WITH <span style={{ color: "#e74c3c" }}>&#9829;</span> BY{" "}
+        <a
+          href="https://www.instagram.com/house_of_invitation_"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "#E8C07A", textDecoration: "none" }}
         >
-          May 8, 2026
-        </p>
+          HOUSE OF INVITATION
+        </a>
       </motion.div>
     </footer>
   )

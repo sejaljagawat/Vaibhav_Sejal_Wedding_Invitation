@@ -1,159 +1,209 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { MapPin, Calendar, Clock } from "lucide-react"
 
 const events = [
   {
+    date: "07th May, 2026",
     name: "Sangeet",
-    date: "May 7, 2026",
-    time: "6:00 PM onwards",
-    venue: "Celebration Hall, Mumbai",
-    description: "An evening of music, dance, and celebration",
-    icon: "🎵",
+    venue: "Woodrose Banquets and Hotel, Belagavi",
+    mapsQuery: "Woodrose+Banquets+and+Hotel,+Belagavi",
+    videoSrc: "https://pub-1953a6673e864f3488c645252f75de98.r2.dev/April/Tejaswini%20%26%20Sourabh/215.mp4",
   },
   {
-    name: "Wedding Ceremony",
-    date: "May 8, 2026",
-    time: "9:00 AM onwards",
-    venue: "Grand Palace Banquets, Mumbai",
-    description: "The sacred union of two souls",
-    icon: "💍",
+    date: "08th May, 2026",
+    name: "Marriage",
+    venue: "Woodrose Banquets and Hotel, Belagavi",
+    mapsQuery: "Woodrose+Banquets+and+Hotel,+Belagavi",
+    videoSrc: "https://pub-1953a6673e864f3488c645252f75de98.r2.dev/April/Tejaswini%20%26%20Sourabh/216.mp4",
   },
   {
+    date: "10th May, 2026",
     name: "Reception",
-    date: "May 10, 2026",
-    time: "7:00 PM onwards",
-    venue: "Royal Gardens, Mumbai",
-    description: "Join us for dinner and festivities",
-    icon: "🎉",
+    venue: "Mayur Belgaum Presidency Hotel & Spa, Belagavi",
+    mapsQuery: "Mayur+Belgaum+Presidency+Hotel+%26+Spa,+Belagavi",
+    videoSrc: "https://pub-1953a6673e864f3488c645252f75de98.r2.dev/April/Tejaswini%20%26%20Sourabh/217.mp4",
   },
 ]
 
+function EventSeparator() {
+  return (
+    <div className="flex items-center justify-center gap-4 my-8 max-w-[200px] mx-auto opacity-50">
+      <div className="flex-1 h-px" style={{ background: "#C9963E" }} />
+      <div className="w-1.5 h-1.5 rounded-full" style={{ background: "#C9963E" }} />
+      <div className="flex-1 h-px" style={{ background: "#C9963E" }} />
+    </div>
+  )
+}
+
 export function Ceremonies() {
   return (
-    <section className="py-20 px-4" style={{ background: "#FFF8F3" }}>
-      <div className="max-w-4xl mx-auto">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+    <section id="events-section" className="py-20 px-6" style={{ background: "#FFF8F3" }}>
+      {/* Section Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 25 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2 }}
+        viewport={{ once: true }}
+        className="text-center mb-12"
+      >
+        <span
+          style={{
+            fontFamily: "'Tenor Sans', sans-serif",
+            fontSize: "0.65rem",
+            letterSpacing: "0.35em",
+            textTransform: "uppercase",
+            color: "#C9963E",
+            display: "block",
+            marginBottom: "0.75rem",
+          }}
         >
-          <span
-            className="block mb-3"
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "0.7rem",
-              letterSpacing: "0.3em",
-              textTransform: "uppercase",
-              color: "#C9963E",
-            }}
-          >
-            The Celebration Unfolds
-          </span>
-          <h2
-            style={{
-              fontFamily: "var(--font-script)",
-              fontSize: "clamp(2.5rem, 8vw, 4rem)",
-              color: "#B85940",
-              lineHeight: 1.2,
-            }}
-          >
-            Wedding Events
-          </h2>
-        </motion.div>
+          The Celebration Unfolds
+        </span>
+        <h2
+          style={{
+            fontFamily: "'Great Vibes', cursive",
+            fontSize: "clamp(3rem, 10vw, 5rem)",
+            lineHeight: 1.1,
+            color: "#B85940",
+          }}
+        >
+          Sacred
+          <br />
+          Ceremonies
+        </h2>
 
-        {/* Events Timeline */}
-        <div className="space-y-8">
-          {events.map((event, index) => (
+        {/* Ornament */}
+        <div className="flex items-center justify-center gap-4 mt-4">
+          <div
+            className="h-px w-20"
+            style={{ background: "linear-gradient(to left, #C9963E, transparent)" }}
+          />
+          <svg width="12" height="12" fill="#C9963E" viewBox="0 0 24 24">
+            <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" />
+          </svg>
+          <div
+            className="h-px w-20"
+            style={{ background: "linear-gradient(to right, #C9963E, transparent)" }}
+          />
+        </div>
+      </motion.div>
+
+      {/* Events */}
+      <div className="space-y-0">
+        {events.map((event, index) => (
+          <div key={event.name}>
             <motion.div
-              key={event.name}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
-              className="rounded-2xl p-6 md:p-8"
-              style={{
-                background: "#FFFFFF",
-                border: "1px solid #EEDDD3",
-                boxShadow: "0 4px 24px rgba(92,34,51,0.06)",
-              }}
+              className="max-w-[420px] mx-auto"
             >
-              <div className="flex flex-col md:flex-row md:items-center gap-6">
-                {/* Icon */}
-                <div
-                  className="w-16 h-16 rounded-full flex items-center justify-center text-3xl shrink-0"
-                  style={{ background: "rgba(184,89,64,0.1)" }}
+              {/* Event Title */}
+              <div className="text-center mb-4">
+                <p
+                  style={{
+                    fontFamily: "'Tenor Sans', sans-serif",
+                    fontSize: "1rem",
+                    letterSpacing: "0.3em",
+                    textTransform: "uppercase",
+                    color: "#9E7060",
+                    marginBottom: "0.15rem",
+                  }}
                 >
-                  {event.icon}
-                </div>
+                  {event.date}
+                </p>
+                <h3
+                  style={{
+                    fontFamily: "'Great Vibes', cursive",
+                    fontSize: "2.8rem",
+                    color: "#B85940",
+                  }}
+                >
+                  {event.name}
+                </h3>
+              </div>
 
-                {/* Content */}
-                <div className="flex-1">
-                  <h3
-                    style={{
-                      fontFamily: "var(--font-script)",
-                      fontSize: "2rem",
-                      color: "#B85940",
-                      marginBottom: "0.5rem",
-                    }}
-                  >
-                    {event.name}
-                  </h3>
-                  <p
-                    style={{
-                      fontFamily: "var(--font-serif)",
-                      fontStyle: "italic",
-                      color: "#6B4535",
-                      marginBottom: "1rem",
-                    }}
-                  >
-                    {event.description}
-                  </p>
+              {/* Event Video */}
+              <div
+                className="rounded-[1.5rem] overflow-hidden relative"
+                style={{
+                  border: "1px solid #EEDDD3",
+                  boxShadow: "0 20px 60px -10px rgba(92,34,51,0.12)",
+                  background: "#1a0d08",
+                  maxHeight: "250px",
+                }}
+              >
+                <video
+                  className="w-full h-auto block"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                >
+                  <source src={event.videoSrc} type="video/mp4" />
+                </video>
+                {/* Gradient overlay */}
+                <div
+                  className="absolute bottom-0 left-0 right-0 h-30 pointer-events-none"
+                  style={{
+                    background: "linear-gradient(to top, rgba(26,13,8,0.7), transparent)",
+                  }}
+                />
+              </div>
 
-                  <div className="flex flex-wrap gap-4 text-sm" style={{ color: "#9E7060" }}>
-                    <div className="flex items-center gap-2">
-                      <Calendar size={16} />
-                      <span>{event.date}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Clock size={16} />
-                      <span>{event.time}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <MapPin size={16} />
-                      <span>{event.venue}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Map Link */}
+              {/* Venue Card */}
+              <motion.div
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.2, delay: 0.1 }}
+                viewport={{ once: true }}
+                className="mt-5 mx-auto rounded-[1rem] overflow-hidden text-center flex flex-col items-center gap-3"
+                style={{
+                  background: "#FFFFFF",
+                  border: "1px solid #EEDDD3",
+                  boxShadow: "0 4px 16px rgba(92,34,51,0.06)",
+                  padding: "1.5rem",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "'Cormorant Garamond', serif",
+                    fontStyle: "italic",
+                    fontSize: "1.15rem",
+                    color: "#6B4535",
+                  }}
+                >
+                  Venue: {event.venue}
+                </span>
                 <a
-                  href={`https://maps.google.com/?q=${encodeURIComponent(event.venue)}`}
+                  href={`https://maps.google.com/?q=${event.mapsQuery}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full transition-colors shrink-0"
+                  className="inline-block rounded-full whitespace-nowrap transition-colors duration-200"
                   style={{
                     background: "#B85940",
                     color: "white",
-                    fontFamily: "var(--font-sans)",
+                    padding: "0.8rem 1.8rem",
+                    fontFamily: "'Tenor Sans', sans-serif",
                     fontSize: "0.7rem",
-                    letterSpacing: "0.15em",
+                    letterSpacing: "0.18em",
                     textTransform: "uppercase",
+                    textDecoration: "none",
                   }}
                   onMouseEnter={(e) => (e.currentTarget.style.background = "#8B3E28")}
                   onMouseLeave={(e) => (e.currentTarget.style.background = "#B85940")}
                 >
-                  <MapPin size={14} />
-                  View Map
+                  View on Maps
                 </a>
-              </div>
+              </motion.div>
             </motion.div>
-          ))}
-        </div>
+
+            {/* Separator (not after last item) */}
+            {index < events.length - 1 && <EventSeparator />}
+          </div>
+        ))}
       </div>
     </section>
   )
