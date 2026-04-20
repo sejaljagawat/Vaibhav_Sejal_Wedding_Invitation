@@ -2,165 +2,198 @@
 
 import { useRef, useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
+import confetti from "canvas-confetti";
 
-interface ScratchCardProps {
-  label: string;
-  value: string;
+interface ScratchHeartProps {
+  id: number;
+  onReveal: () => void;
 }
 
-function ScratchCard({ label, value }: ScratchCardProps) {
+function ScratchHeart({ id, onReveal }: ScratchHeartProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [isRevealed, setIsRevealed] = useState(false);
-  const [isScratching, setIsScratching] = useState(false);
-  const lastPosRef = useRef<{ x: number; y: number } | null>(null);
+  const isDrawingRef = useRef(false);
 
-  const getCanvasCoordinates = useCallback((e: MouseEvent | TouchEvent, canvas: HTMLCanvasElement) => {
+  const getMousePos = useCallback((e: MouseEvent | TouchEvent, canvas: HTMLCanvasElement) => {
     const rect = canvas.getBoundingClientRect();
-    let clientX: number, clientY: number;
-
-    if ("touches" in e) {
-      clientX = e.touches[0].clientX;
-      clientY = e.touches[0].clientY;
-    } else {
-      clientX = e.clientX;
-      clientY = e.clientY;
-    }
-
-    return {
-      x: clientX - rect.left,
-      y: clientY - rect.top,
-    };
+    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+    const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
+    return { x: clientX - rect.left, y: clientY - rect.top };
   }, []);
 
-  const scratch = useCallback((e: MouseEvent | TouchEvent) => {
-    const canvas = canvasRef.current;
-    if (!canvas || !isScratching) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const pos = getCanvasCoordinates(e, canvas);
-
-    ctx.globalCompositeOperation = "destination-out";
-    ctx.beginPath();
-    ctx.arc(pos.x, pos.y, 25, 0, Math.PI * 2);
-    ctx.fill();
-
-    if (lastPosRef.current) {
-      ctx.lineWidth = 50;
-      ctx.lineCap = "round";
-      ctx.beginPath();
-      ctx.moveTo(lastPosRef.current.x, lastPosRef.current.y);
-      ctx.lineTo(pos.x, pos.y);
-      ctx.stroke();
-    }
-
-    lastPosRef.current = pos;
-
-    // Check if enough is scratched
+  const checkProgress = useCallback((ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) => {
+    const sampleRate = 32;
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const pixels = imageData.data;
     let transparentPixels = 0;
-    for (let i = 3; i < imageData.data.length; i += 4) {
-      if (imageData.data[i] === 0) transparentPixels++;
+    for (let i = 3; i < pixels.length; i += sampleRate) {
+      if (pixels[i] < 128) transparentPixels++;
     }
-    const percentage = (transparentPixels / (canvas.width * canvas.height)) * 100;
-    if (percentage > 40) {
-      setIsRevealed(true);
-    }
-  }, [isScratching, getCanvasCoordinates]);
+    const totalPixels = pixels.length / sampleRate;
+    return (transparentPixels / totalPixels) * 100 > 45;
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas || isRevealed) return;
+    const container = containerRef.current;
+    if (!canvas || !container || isRevealed) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
-    // Draw hearts pattern
-    ctx.fillStyle = "#c9a959";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const rect = container.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const dpr = window.devicePixelRatio || 1;
+    
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    ctx.scale(dpr, dpr);
 
-    // Add heart pattern
-    ctx.fillStyle = "#d4b76a";
-    for (let i = 0; i < 8; i++) {
-      for (let j = 0; j < 6; j++) {
-        const x = i * 20 + 10;
-        const y = j * 20 + 10;
-        ctx.font = "12px serif";
-        ctx.fillText("♥", x, y);
+    // Warm Terracotta fill for scratch layer
+    ctx.fillStyle = "#B85940";
+    ctx.fillRect(0, 0, width, height);
+
+    // Scratch indication text
+    ctx.fillStyle = "rgba(255,255,255,0.7)";
+    ctx.font = "12px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("SCRATCH", width / 2, height / 2 + 4);
+
+    const scratch = (e: MouseEvent | TouchEvent) => {
+      if (!isDrawingRef.current || isRevealed) return;
+      if (e.cancelable && e.type.startsWith("touch")) e.preventDefault();
+      
+      const pos = getMousePos(e, canvas);
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, width * 0.22, 0, Math.PI * 2);
+      ctx.fill();
+
+      if (Math.random() > 0.2 && checkProgress(ctx, canvas)) {
+        setIsRevealed(true);
+        canvas.style.opacity = "0";
+        setTimeout(() => {
+          canvas.style.display = "none";
+          onReveal();
+        }, 500);
       }
-    }
-
-    const handleMouseDown = (e: MouseEvent) => {
-      setIsScratching(true);
-      lastPosRef.current = getCanvasCoordinates(e, canvas);
     };
 
-    const handleMouseUp = () => {
-      setIsScratching(false);
-      lastPosRef.current = null;
+    const handleStart = (e: MouseEvent | TouchEvent) => {
+      isDrawingRef.current = true;
+      scratch(e);
     };
 
-    const handleTouchStart = (e: TouchEvent) => {
-      e.preventDefault();
-      setIsScratching(true);
-      lastPosRef.current = getCanvasCoordinates(e, canvas);
+    const handleEnd = () => {
+      isDrawingRef.current = false;
     };
 
-    const handleTouchEnd = () => {
-      setIsScratching(false);
-      lastPosRef.current = null;
-    };
-
-    canvas.addEventListener("mousedown", handleMouseDown);
-    canvas.addEventListener("mouseup", handleMouseUp);
-    canvas.addEventListener("mouseleave", handleMouseUp);
-    canvas.addEventListener("mousemove", scratch as (e: MouseEvent) => void);
-    canvas.addEventListener("touchstart", handleTouchStart);
-    canvas.addEventListener("touchend", handleTouchEnd);
-    canvas.addEventListener("touchmove", scratch as unknown as (e: TouchEvent) => void);
+    canvas.addEventListener("mousedown", handleStart);
+    canvas.addEventListener("touchstart", handleStart, { passive: false });
+    window.addEventListener("mouseup", handleEnd);
+    window.addEventListener("touchend", handleEnd);
+    canvas.addEventListener("mousemove", scratch);
+    canvas.addEventListener("touchmove", scratch, { passive: false });
 
     return () => {
-      canvas.removeEventListener("mousedown", handleMouseDown);
-      canvas.removeEventListener("mouseup", handleMouseUp);
-      canvas.removeEventListener("mouseleave", handleMouseUp);
-      canvas.removeEventListener("mousemove", scratch as (e: MouseEvent) => void);
-      canvas.removeEventListener("touchstart", handleTouchStart);
-      canvas.removeEventListener("touchend", handleTouchEnd);
-      canvas.removeEventListener("touchmove", scratch as unknown as (e: TouchEvent) => void);
+      canvas.removeEventListener("mousedown", handleStart);
+      canvas.removeEventListener("touchstart", handleStart);
+      window.removeEventListener("mouseup", handleEnd);
+      window.removeEventListener("touchend", handleEnd);
+      canvas.removeEventListener("mousemove", scratch);
+      canvas.removeEventListener("touchmove", scratch);
     };
-  }, [isRevealed, scratch, getCanvasCoordinates]);
+  }, [isRevealed, getMousePos, checkProgress, onReveal]);
 
   return (
-    <div className="relative flex flex-col items-center">
-      <span className="text-sm font-sans text-muted-foreground uppercase tracking-widest mb-3">
-        {label}
-      </span>
-      <div className="relative w-28 h-24 rounded-lg overflow-hidden shadow-lg">
-        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-rose-light to-secondary">
-          <span className="text-3xl font-serif font-bold text-primary">{value}</span>
-        </div>
-        {!isRevealed && (
-          <canvas
-            ref={canvasRef}
-            width={160}
-            height={120}
-            className="absolute inset-0 w-full h-full cursor-pointer"
-            style={{ touchAction: "none" }}
+    <div
+      ref={containerRef}
+      className="relative w-20 h-20 md:w-24 md:h-24"
+    >
+      {/* Heart shape background */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <svg
+          viewBox="0 0 100 100"
+          className="w-full h-full"
+        >
+          <defs>
+            <linearGradient id={`heartGradient${id}`} x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#C9963E" />
+              <stop offset="100%" stopColor="#E8C07A" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M50 88.9C48.5 88.9 47 88.3 45.8 87.2C39.7 81.6 33.8 76.3 28.6 71.5L28.4 71.3C17.3 61.2 7.7 52.5 1.5 44C-5.4 34.5 -2.3 21.7 7.2 12.6C12.6 7.4 19.5 4.5 27 4.5C32.4 4.5 37.4 6.1 41.8 9.2C44.1 10.8 46.1 12.8 47.9 15.1C49.7 12.8 51.8 10.8 54.1 9.2C58.5 6.1 63.5 4.5 68.9 4.5C76.4 4.5 83.3 7.4 88.7 12.6C98.2 21.7 101.3 34.5 94.4 44C88.2 52.5 78.6 61.2 67.5 71.3L67.3 71.5C62.1 76.3 56.2 81.6 50.1 87.2C48.9 88.3 47.4 88.9 50 88.9Z"
+            fill={`url(#heartGradient${id})`}
+            transform="translate(2, 5) scale(0.95)"
           />
-        )}
+        </svg>
       </div>
+      {/* Scratch canvas overlay */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full cursor-pointer transition-opacity duration-500"
+        style={{ 
+          touchAction: "none",
+          clipPath: "path('M50 88.9C48.5 88.9 47 88.3 45.8 87.2C39.7 81.6 33.8 76.3 28.6 71.5L28.4 71.3C17.3 61.2 7.7 52.5 1.5 44C-5.4 34.5 -2.3 21.7 7.2 12.6C12.6 7.4 19.5 4.5 27 4.5C32.4 4.5 37.4 6.1 41.8 9.2C44.1 10.8 46.1 12.8 47.9 15.1C49.7 12.8 51.8 10.8 54.1 9.2C58.5 6.1 63.5 4.5 68.9 4.5C76.4 4.5 83.3 7.4 88.7 12.6C98.2 21.7 101.3 34.5 94.4 44C88.2 52.5 78.6 61.2 67.5 71.3L67.3 71.5C62.1 76.3 56.2 81.6 50.1 87.2C48.9 88.3 47.4 88.9 50 88.9Z')",
+          transform: "scale(0.95) translate(2%, 5%)"
+        }}
+      />
     </div>
   );
 }
 
 export function SaveTheDate() {
+  const [revealedCount, setRevealedCount] = useState(0);
+  const [allRevealed, setAllRevealed] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
     mins: 0,
     secs: 0,
   });
+
+  const handleHeartReveal = useCallback(() => {
+    setRevealedCount((prev) => {
+      const newCount = prev + 1;
+      if (newCount === 3) {
+        setAllRevealed(true);
+        // Trigger confetti
+        setTimeout(() => {
+          const duration = 3000;
+          const end = Date.now() + duration;
+          const colors = ["#B85940", "#C9963E", "#E8C07A", "#FFFFFF"];
+
+          const frame = () => {
+            confetti({
+              particleCount: 5,
+              angle: 60,
+              spread: 55,
+              origin: { x: 0, y: 0.6 },
+              colors: colors,
+              zIndex: 9999,
+            });
+            confetti({
+              particleCount: 5,
+              angle: 120,
+              spread: 55,
+              origin: { x: 1, y: 0.6 },
+              colors: colors,
+              zIndex: 9999,
+            });
+
+            if (Date.now() < end) {
+              requestAnimationFrame(frame);
+            }
+          };
+          frame();
+        }, 300);
+      }
+      return newCount;
+    });
+  }, []);
 
   useEffect(() => {
     const weddingDate = new Date("2026-05-08T00:00:00");
@@ -214,31 +247,63 @@ export function SaveTheDate() {
           transition={{ delay: 0.2 }}
           className="text-muted-foreground font-serif mb-12"
         >
-          Scratch the hearts to reveal
+          Scratch all three hearts to unlock the date
         </motion.p>
 
-        {/* Scratch Cards */}
+        {/* Scratch Hearts */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
-          className="flex flex-wrap justify-center gap-8 mb-12"
+          className={`flex justify-center items-center gap-6 md:gap-10 mb-8 transition-all duration-500 ${
+            allRevealed ? "scale-110" : ""
+          }`}
         >
-          <ScratchCard label="DAY" value="08" />
-          <ScratchCard label="MONTH" value="May" />
-          <ScratchCard label="YEAR" value="2026" />
+          <ScratchHeart id={1} onReveal={handleHeartReveal} />
+          <ScratchHeart id={2} onReveal={handleHeartReveal} />
+          <ScratchHeart id={3} onReveal={handleHeartReveal} />
         </motion.div>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="text-lg font-serif text-muted-foreground italic mb-12"
+        {/* Revealed Date */}
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ 
+            opacity: allRevealed ? 1 : 0, 
+            height: allRevealed ? "auto" : 0 
+          }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="overflow-hidden mb-12"
         >
-          The start of a beautiful journey...
-        </motion.p>
+          <div className="py-8 px-6 bg-gradient-to-r from-transparent via-gold/10 to-transparent rounded-lg">
+            <p className="text-2xl md:text-3xl font-serif text-foreground mb-2">
+              Friday, May 8th, 2026
+            </p>
+            <p className="text-lg font-script text-gold-dark">
+              The start of our forever...
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Progress indicator */}
+        {!allRevealed && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="flex justify-center gap-2 mb-12"
+          >
+            {[0, 1, 2].map((i) => (
+              <div
+                key={i}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  i < revealedCount ? "bg-gold scale-125" : "bg-muted"
+                }`}
+              />
+            ))}
+          </motion.div>
+        )}
 
         {/* Countdown */}
         <motion.div
@@ -246,7 +311,7 @@ export function SaveTheDate() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
-          className="flex flex-wrap justify-center gap-6"
+          className="flex flex-wrap justify-center gap-4 md:gap-6"
         >
           {[
             { value: timeLeft.days, label: "Days" },
@@ -256,12 +321,12 @@ export function SaveTheDate() {
           ].map((item) => (
             <div
               key={item.label}
-              className="flex flex-col items-center bg-card p-4 rounded-lg shadow-md min-w-[80px]"
+              className="flex flex-col items-center bg-card p-4 rounded-lg shadow-md min-w-[70px] md:min-w-[80px] border border-border/50"
             >
-              <span className="text-3xl md:text-4xl font-serif font-bold text-primary">
+              <span className="text-2xl md:text-4xl font-serif font-bold text-primary">
                 {String(item.value).padStart(2, "0")}
               </span>
-              <span className="text-sm font-sans text-muted-foreground">{item.label}</span>
+              <span className="text-xs md:text-sm font-sans text-muted-foreground">{item.label}</span>
             </div>
           ))}
         </motion.div>
