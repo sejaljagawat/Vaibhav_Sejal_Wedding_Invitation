@@ -1,253 +1,148 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import Image from "next/image"
+import { motion } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 
 export function Hero() {
+  const scrollToNext = () => {
+    const nextSection = document.getElementById("save-the-date");
+    nextSection?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <section
-      id="hero"
-      className="relative min-h-dvh flex items-center justify-center overflow-hidden px-4 py-12"
-      style={{ background: "#FDF0E8" }}
-    >
-      {/* Background Video */}
-      <video
-        className="absolute inset-0 w-full h-full object-cover object-top opacity-[0.22] z-0"
-        autoPlay
-        loop
-        muted
-        playsInline
-      >
-        <source
-          src="https://pub-1953a6673e864f3488c645252f75de98.r2.dev/common-assets/Background.mp4"
-          type="video/mp4"
-        />
-      </video>
+    <section className="relative min-h-screen flex flex-col items-center justify-center px-4 py-20 overflow-hidden">
+      {/* Decorative Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-rose-light/30 via-background to-background" />
+      
+      {/* Decorative Corners */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.3 }}
+        transition={{ duration: 1.5 }}
+        className="absolute top-0 left-0 w-40 h-40 border-l-2 border-t-2 border-gold"
+      />
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.3 }}
+        transition={{ duration: 1.5 }}
+        className="absolute top-0 right-0 w-40 h-40 border-r-2 border-t-2 border-gold"
+      />
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.3 }}
+        transition={{ duration: 1.5 }}
+        className="absolute bottom-0 left-0 w-40 h-40 border-l-2 border-b-2 border-gold"
+      />
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.3 }}
+        transition={{ duration: 1.5 }}
+        className="absolute bottom-0 right-0 w-40 h-40 border-r-2 border-b-2 border-gold"
+      />
 
-      {/* Corner Frame */}
-      <div className="absolute inset-5 pointer-events-none z-[2]">
-        <div
-          className="absolute top-0 left-0 w-15 h-15 opacity-50"
-          style={{ borderWidth: "1px 0 0 1px", borderStyle: "solid", borderColor: "#C9963E" }}
-        />
-        <div
-          className="absolute top-0 right-0 w-15 h-15 opacity-50"
-          style={{ borderWidth: "1px 1px 0 0", borderStyle: "solid", borderColor: "#C9963E" }}
-        />
-        <div
-          className="absolute bottom-0 left-0 w-15 h-15 opacity-50"
-          style={{ borderWidth: "0 0 1px 1px", borderStyle: "solid", borderColor: "#C9963E" }}
-        />
-        <div
-          className="absolute bottom-0 right-0 w-15 h-15 opacity-50"
-          style={{ borderWidth: "0 1px 1px 0", borderStyle: "solid", borderColor: "#C9963E" }}
-        />
-      </div>
-
-      {/* Hero Card */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.96, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 1.6, ease: "easeOut", delay: 0.2 }}
-        className="relative z-[3] w-full max-w-[540px] rounded-[2rem] text-center flex flex-col items-center"
-        style={{
-          background: "rgba(255,255,255,0.85)",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
-          border: "1px solid rgba(201,150,62,0.2)",
-          padding: "clamp(2.5rem, 6vw, 3.5rem) clamp(1.5rem, 5vw, 3rem)",
-          boxShadow: "0 20px 60px -10px rgba(92,34,51,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset",
-        }}
-      >
-        {/* Corner Decorations */}
-        <div
-          className="absolute top-4 left-4 w-8 h-8 rounded-tl"
-          style={{ borderWidth: "1px 0 0 1px", borderStyle: "solid", borderColor: "rgba(201,150,62,0.35)" }}
-        />
-        <div
-          className="absolute top-4 right-4 w-8 h-8 rounded-tr"
-          style={{ borderWidth: "1px 1px 0 0", borderStyle: "solid", borderColor: "rgba(201,150,62,0.35)" }}
-        />
-        <div
-          className="absolute bottom-4 left-4 w-8 h-8 rounded-bl"
-          style={{ borderWidth: "0 0 1px 1px", borderStyle: "solid", borderColor: "rgba(201,150,62,0.35)" }}
-        />
-        <div
-          className="absolute bottom-4 right-4 w-8 h-8 rounded-br"
-          style={{ borderWidth: "0 1px 1px 0", borderStyle: "solid", borderColor: "rgba(201,150,62,0.35)" }}
-        />
-
-        {/* Ganesh Icon */}
-        <motion.div
-          animate={{ y: [0, -6, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+      <div className="relative z-10 text-center max-w-4xl mx-auto">
+        {/* Title */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-5xl md:text-7xl font-script text-gold-dark mb-4"
         >
-          <Image
-            src="https://pub-1953a6673e864f3488c645252f75de98.r2.dev/Shriya%20%26%20Ashutosh/Vianyak%20png.png"
-            alt="Shri Ganesh"
-            width={60}
-            height={60}
-            className="h-15 w-auto object-contain mb-3"
-          />
-        </motion.div>
+          Vaibhav & Sejal
+        </motion.p>
+        
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-lg md:text-xl font-serif text-muted-foreground tracking-widest mb-12"
+        >
+          — A Sacred Union 💕
+        </motion.p>
 
         {/* Sanskrit Shloka */}
-        <p
-          className="uppercase mb-5 px-4"
-          style={{
-            fontFamily: "'Tenor Sans', sans-serif",
-            fontSize: "0.62rem",
-            letterSpacing: "0.3em",
-            color: "#B85940",
-            lineHeight: 1.8,
-          }}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="mb-12 p-6 border border-gold/30 rounded-lg bg-card/50 backdrop-blur-sm"
         >
-          वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ
-          <br />
-          निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा
-        </p>
+          <p className="text-lg md:text-xl font-serif text-foreground leading-relaxed">
+            वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ
+            <br />
+            निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा
+          </p>
+        </motion.div>
 
-        {/* Blessings Text */}
-        <p
-          className="mb-7 px-4"
-          style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontStyle: "italic",
-            fontSize: "1.05rem",
-            color: "#6B4535",
-            lineHeight: 1.5,
-          }}
+        {/* Invitation Text */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="text-base md:text-lg font-serif text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed"
         >
-          With the blessings of the Almighty & our respected elders,
-          <br />
-          we joyfully request your gracious presence on the wedding celebration of
-        </p>
+          With the blessings of the Almighty & our respected elders, we joyfully request your gracious presence on the wedding celebration of
+        </motion.p>
 
-        {/* Groom */}
-        <div className="w-full mb-2">
-          <span
-            className="shimmer-gold block"
-            style={{
-              fontFamily: "'Pinyon Script', cursive",
-              fontSize: "clamp(3rem, 11vw, 4.8rem)",
-              lineHeight: 1.1,
-              letterSpacing: "0.02em",
-              padding: "0.2rem 0",
-            }}
+        {/* Couple Names */}
+        <div className="grid md:grid-cols-3 gap-8 items-center mb-12">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="text-center"
           >
-            Vaibhav
-          </span>
-          <p
-            style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "0.9rem",
-              fontWeight: 500,
-              color: "#2E1810",
-              lineHeight: 1.4,
-              marginTop: "0.5rem",
-            }}
-          >
-            Son of Mr. Abhay Shah & Mrs. Kiran Shah
-          </p>
-          <p
-            style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "0.95rem",
-              fontStyle: "italic",
-              color: "#2E1810",
-              lineHeight: 1.3,
-              marginTop: "0.2rem",
-            }}
-          >
-            (Grandson of Shankar Lalji Shah & Late Smt. Suryakanta)
-          </p>
-        </div>
+            <h2 className="text-4xl md:text-5xl font-script text-primary mb-4">Vaibhav</h2>
+            <p className="text-sm md:text-base font-serif text-muted-foreground">
+              Son of Mr. Rajesh Shah & Mrs. Meena Shah
+            </p>
+            <p className="text-xs md:text-sm font-serif text-muted-foreground/70 mt-2">
+              (Grandson of Late Shri Kantilal Shah & Smt. Kamla)
+            </p>
+          </motion.div>
 
-        {/* Ampersand */}
-        <div className="flex items-center justify-center gap-4 my-6 w-full">
-          <div className="h-px w-10" style={{ background: "#EEDDD3" }} />
-          <span
-            style={{
-              fontFamily: "'Great Vibes', cursive",
-              fontSize: "2.2rem",
-              color: "#C9963E",
-              lineHeight: 1,
-            }}
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 1 }}
+            className="text-5xl md:text-6xl font-script text-gold"
           >
             &
-          </span>
-          <div className="h-px w-10" style={{ background: "#EEDDD3" }} />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="text-center"
+          >
+            <h2 className="text-4xl md:text-5xl font-script text-primary mb-4">Sejal</h2>
+            <p className="text-sm md:text-base font-serif text-muted-foreground">
+              Daughter of Mr. Suresh Patel & Mrs. Bharti Patel
+            </p>
+            <p className="text-xs md:text-sm font-serif text-muted-foreground/70 mt-2">
+              (Granddaughter of Late Shri Ramesh Patel & Smt. Savita)
+            </p>
+          </motion.div>
         </div>
 
-        {/* Bride */}
-        <div className="w-full">
-          <span
-            className="shimmer-gold block"
-            style={{
-              fontFamily: "'Pinyon Script', cursive",
-              fontSize: "clamp(3rem, 11vw, 4.8rem)",
-              lineHeight: 1.1,
-              letterSpacing: "0.02em",
-              padding: "0.2rem 0",
-            }}
-          >
-            Sejal
-          </span>
-          <p
-            style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "0.9rem",
-              fontWeight: 500,
-              color: "#2E1810",
-              lineHeight: 1.4,
-              marginTop: "0.5rem",
-            }}
-          >
-            Daughter of Mr. Jammbu Kumar Jagawat & Mrs. Chanda
-          </p>
-          <p
-            style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "0.95rem",
-              fontStyle: "italic",
-              color: "#2E1810",
-              lineHeight: 1.3,
-              marginTop: "0.2rem",
-            }}
-          >
-            (Granddaughter of Late Shri Marutirao Ghasari & Smt Chanda, Smt Ranjana)
-          </p>
-        </div>
-      </motion.div>
-
-      {/* Scroll Cue */}
-      <motion.div
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-[5] flex flex-col items-center gap-1 opacity-70"
-      >
-        <p
-          style={{
-            fontFamily: "'Tenor Sans', sans-serif",
-            fontSize: "0.6rem",
-            letterSpacing: "0.3em",
-            textTransform: "uppercase",
-            color: "#6B4535",
-          }}
+        {/* Scroll Indicator */}
+        <motion.button
+          onClick={scrollToNext}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 1.2 }}
+          className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors cursor-pointer"
         >
-          Scroll
-        </p>
-        <svg
-          width="18"
-          height="18"
-          fill="none"
-          stroke="#6B4535"
-          strokeWidth="2"
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-        </svg>
-      </motion.div>
+          <span className="text-sm font-sans tracking-widest uppercase">Scroll</span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5 }}
+          >
+            <ChevronDown className="w-6 h-6" />
+          </motion.div>
+        </motion.button>
+      </div>
     </section>
-  )
+  );
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Cormorant_Garamond, Great_Vibes, Tenor_Sans, Pinyon_Script } from 'next/font/google'
+import { Cormorant_Garamond, Great_Vibes, Poppins } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
@@ -15,16 +15,10 @@ const greatVibes = Great_Vibes({
   variable: "--font-script"
 });
 
-const tenorSans = Tenor_Sans({ 
+const poppins = Poppins({ 
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["300", "400", "500", "600"],
   variable: "--font-sans"
-});
-
-const pinyonScript = Pinyon_Script({ 
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-pinyon"
 });
 
 export const metadata: Metadata = {
@@ -56,7 +50,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${greatVibes.variable} ${tenorSans.variable} ${pinyonScript.variable}`}>
+    <html lang="en" className={`${cormorant.variable} ${greatVibes.variable} ${poppins.variable}`}>
       <body className="font-sans antialiased bg-background">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}

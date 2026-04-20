@@ -4,41 +4,25 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Terracotta Gold Luxury Palette */
-  --cream: #FFF8F3;
-  --cream-2: #FDF0E8;
-  --terracotta: #B85940;
-  --terra-dark: #8B3E28;
-  --terra-light: #D4806A;
-  --gold: #C9963E;
-  --gold-light: #E8C07A;
-  --gold-pale: #F5E4C0;
-  --burgundy: #5C2233;
-  --text-dark: #2E1810;
-  --text-mid: #6B4535;
-  --text-light: #9E7060;
-  --border-color: #EEDDD3;
-  --white: #FFFFFF;
-  
-  --background: #FFF8F3;
-  --foreground: #2E1810;
-  --card: #FFFFFF;
-  --card-foreground: #2E1810;
-  --popover: #FFFFFF;
-  --popover-foreground: #2E1810;
-  --primary: #B85940;
-  --primary-foreground: #FFFFFF;
-  --secondary: #FDF0E8;
-  --secondary-foreground: #2E1810;
-  --muted: #FDF0E8;
-  --muted-foreground: #9E7060;
-  --accent: #C9963E;
-  --accent-foreground: #2E1810;
+  --background: oklch(0.98 0.005 30);
+  --foreground: oklch(0.25 0.02 30);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.25 0.02 30);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.25 0.02 30);
+  --primary: oklch(0.55 0.15 15);
+  --primary-foreground: oklch(0.98 0.005 30);
+  --secondary: oklch(0.95 0.02 50);
+  --secondary-foreground: oklch(0.25 0.02 30);
+  --muted: oklch(0.95 0.01 30);
+  --muted-foreground: oklch(0.5 0.02 30);
+  --accent: oklch(0.85 0.1 50);
+  --accent-foreground: oklch(0.25 0.02 30);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: #EEDDD3;
-  --input: #FDF0E8;
-  --ring: #B85940;
+  --border: oklch(0.9 0.02 30);
+  --input: oklch(0.95 0.01 30);
+  --ring: oklch(0.55 0.15 15);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -53,6 +37,10 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --gold: oklch(0.75 0.12 85);
+  --gold-dark: oklch(0.6 0.15 70);
+  --rose: oklch(0.7 0.12 15);
+  --rose-light: oklch(0.9 0.05 15);
 }
 
 .dark {
@@ -91,24 +79,14 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-sans), 'Tenor Sans', sans-serif;
+  --font-sans: var(--font-sans), 'Poppins', sans-serif;
   --font-serif: var(--font-serif), 'Cormorant Garamond', serif;
   --font-script: var(--font-script), 'Great Vibes', cursive;
-  --font-pinyon: var(--font-pinyon), 'Pinyon Script', cursive;
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
-  --color-cream: var(--cream);
-  --color-cream-2: var(--cream-2);
-  --color-terracotta: var(--terracotta);
-  --color-terra-dark: var(--terra-dark);
-  --color-terra-light: var(--terra-light);
   --color-gold: var(--gold);
-  --color-gold-light: var(--gold-light);
-  --color-gold-pale: var(--gold-pale);
-  --color-burgundy: var(--burgundy);
-  --color-text-dark: var(--text-dark);
-  --color-text-mid: var(--text-mid);
-  --color-text-light: var(--text-light);
-  --color-border-wedding: var(--border-color);
+  --color-gold-dark: var(--gold-dark);
+  --color-rose: var(--rose);
+  --color-rose-light: var(--rose-light);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -145,44 +123,6 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-}
-
-/* Shimmer Gold Animation */
-@keyframes shimmer {
-  to { background-position: 200% center; }
-}
-
-.shimmer-gold {
-  background: linear-gradient(105deg, #8B3E28 20%, #C9963E 40%, #E8C07A 50%, #C9963E 60%, #8B3E28 80%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: shimmer 4s linear infinite;
-}
-
-/* Floating Icon Animation */
-@keyframes floatIcon {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
-/* Scroll Bounce Animation */
-@keyframes scrollBounce {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(8px); }
-}
-
-/* Gentle Heart Beat Animation */
-@keyframes gentleHeartBeat {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-/* Hero Card In Animation */
-@keyframes heroCardIn {
-  from { opacity: 0; transform: scale(0.96) translateY(20px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 @layer base {
