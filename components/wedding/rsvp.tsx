@@ -1,66 +1,74 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Send, Heart, CheckCircle } from "lucide-react";
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { Heart, Send } from "lucide-react"
 
 export function RSVP() {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
     emotional: "",
-    mood: [] as string[],
+    mood: "",
     wishes: "",
     advice: "",
-  });
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  })
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleMoodToggle = (mood: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      mood: prev.mood.includes(mood)
-        ? prev.mood.filter((m) => m !== mood)
-        : [...prev.mood, mood],
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitted(true);
-  };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    setIsSubmitting(false)
+    setIsSubmitted(true)
+  }
 
   return (
-    <section className="py-24 px-4 bg-gradient-to-b from-background via-rose-light/20 to-background">
-      <div className="max-w-2xl mx-auto">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
+    <section className="py-20 px-4" style={{ background: "#FDF0E8" }}>
+      <div className="max-w-lg mx-auto">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-lg font-sans text-muted-foreground uppercase tracking-widest mb-4 text-center"
+          transition={{ duration: 0.8 }}
+          className="text-center mb-12"
         >
-          Join the Celebration
-        </motion.p>
-
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="text-4xl md:text-5xl font-serif mb-4 text-center"
-        >
-          Celebrate
-          <span className="font-script text-gold-dark ml-2">With Us</span>
-        </motion.h2>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="text-muted-foreground font-serif mb-12 text-center"
-        >
-          A few fun questions before the big day!
-        </motion.p>
+          <span
+            className="block mb-3"
+            style={{
+              fontFamily: "var(--font-sans)",
+              fontSize: "0.7rem",
+              letterSpacing: "0.3em",
+              textTransform: "uppercase",
+              color: "#C9963E",
+            }}
+          >
+            Join the Celebration
+          </span>
+          <h2
+            style={{
+              fontFamily: "var(--font-script)",
+              fontSize: "clamp(2.5rem, 8vw, 4rem)",
+              color: "#B85940",
+              lineHeight: 1.2,
+            }}
+          >
+            RSVP
+          </h2>
+          <p
+            className="mt-4"
+            style={{
+              fontFamily: "var(--font-serif)",
+              fontStyle: "italic",
+              color: "#9E7060",
+              fontSize: "1.1rem",
+            }}
+          >
+            We would be honored by your presence
+          </p>
+        </motion.div>
 
         <AnimatePresence mode="wait">
           {isSubmitted ? (
@@ -68,12 +76,37 @@ export function RSVP() {
               key="success"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="bg-card p-12 rounded-2xl shadow-xl border border-gold/20 text-center"
+              className="text-center py-12 px-6 rounded-2xl"
+              style={{
+                background: "#FFFFFF",
+                border: "1px solid #EEDDD3",
+              }}
             >
-              <CheckCircle className="w-20 h-20 text-green-500 mx-auto mb-6" />
-              <h3 className="text-3xl font-script text-primary mb-4">Thank You!</h3>
-              <p className="text-muted-foreground font-serif">
-                We can&apos;t wait to celebrate with you!
+              <div
+                className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6"
+                style={{ background: "rgba(184,89,64,0.1)" }}
+              >
+                <Heart size={32} style={{ color: "#B85940" }} fill="#B85940" />
+              </div>
+              <h3
+                style={{
+                  fontFamily: "var(--font-script)",
+                  fontSize: "2.5rem",
+                  color: "#B85940",
+                  marginBottom: "0.5rem",
+                }}
+              >
+                Thank You!
+              </h3>
+              <p
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontStyle: "italic",
+                  color: "#9E7060",
+                  fontSize: "1.1rem",
+                }}
+              >
+                {"We can't wait to celebrate with you!"}
               </p>
             </motion.div>
           ) : (
@@ -82,165 +115,319 @@ export function RSVP() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
               onSubmit={handleSubmit}
-              className="bg-card p-8 rounded-2xl shadow-xl border border-gold/20"
+              className="space-y-6"
             >
               {/* Guest Details */}
-              <div className="mb-8">
-                <h3 className="text-lg font-sans text-muted-foreground uppercase tracking-widest mb-4">
+              <div
+                className="rounded-2xl p-6"
+                style={{
+                  background: "#FFFFFF",
+                  border: "1px solid #EEDDD3",
+                }}
+              >
+                <h3
+                  style={{
+                    fontFamily: "var(--font-serif)",
+                    fontWeight: 600,
+                    fontSize: "1.25rem",
+                    color: "#B85940",
+                    marginBottom: "1rem",
+                  }}
+                >
                   Guest Details
                 </h3>
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="space-y-4">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-serif text-muted-foreground mb-2">
+                    <label
+                      className="block mb-2"
+                      style={{
+                        fontFamily: "var(--font-sans)",
+                        fontSize: "0.65rem",
+                        letterSpacing: "0.2em",
+                        textTransform: "uppercase",
+                        color: "#9E7060",
+                      }}
+                    >
                       Your Name
                     </label>
                     <input
                       type="text"
-                      id="name"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all font-serif"
-                      placeholder="Enter your name"
                       required
+                      placeholder="Full name"
+                      className="w-full px-4 py-3 rounded-lg outline-none transition-colors"
+                      style={{
+                        background: "#FFF8F3",
+                        border: "1px solid #EEDDD3",
+                        fontFamily: "var(--font-serif)",
+                        fontSize: "1rem",
+                        color: "#2E1810",
+                      }}
                     />
                   </div>
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-serif text-muted-foreground mb-2">
+                    <label
+                      className="block mb-2"
+                      style={{
+                        fontFamily: "var(--font-sans)",
+                        fontSize: "0.65rem",
+                        letterSpacing: "0.2em",
+                        textTransform: "uppercase",
+                        color: "#9E7060",
+                      }}
+                    >
                       Phone Number
                     </label>
                     <input
                       type="tel"
-                      id="phone"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all font-serif"
-                      placeholder="Enter your phone number"
+                      required
+                      placeholder="+91 00000 00000"
+                      className="w-full px-4 py-3 rounded-lg outline-none transition-colors"
+                      style={{
+                        background: "#FFF8F3",
+                        border: "1px solid #EEDDD3",
+                        fontFamily: "var(--font-serif)",
+                        fontSize: "1rem",
+                        color: "#2E1810",
+                      }}
                     />
                   </div>
                 </div>
               </div>
 
-              {/* Fun Question */}
-              <div className="mb-8">
-                <h3 className="text-lg font-sans text-muted-foreground uppercase tracking-widest mb-2">
+              {/* Who Gets Emotional */}
+              <div
+                className="rounded-2xl p-6"
+                style={{
+                  background: "#FFFFFF",
+                  border: "1px solid #EEDDD3",
+                }}
+              >
+                <h3
+                  style={{
+                    fontFamily: "var(--font-serif)",
+                    fontWeight: 600,
+                    fontSize: "1.25rem",
+                    color: "#B85940",
+                    marginBottom: "0.5rem",
+                  }}
+                >
                   Make a Guess
                 </h3>
-                <p className="text-muted-foreground font-serif mb-4">
+                <p
+                  style={{
+                    fontFamily: "var(--font-serif)",
+                    color: "#9E7060",
+                    marginBottom: "1rem",
+                  }}
+                >
                   Who will get emotional first?
                 </p>
-                <div className="flex flex-wrap gap-3">
-                  {[
-                    { value: "vaibhav", label: "V", full: "Vaibhav" },
-                    { value: "sejal", label: "S", full: "Sejal" },
-                    { value: "both", label: "B", full: "Both" },
-                  ].map((option) => (
-                    <button
-                      key={option.value}
-                      type="button"
-                      onClick={() => setFormData({ ...formData, emotional: option.value })}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all ${
-                        formData.emotional === option.value
-                          ? "bg-gold text-card border-gold"
-                          : "border-border hover:border-gold"
-                      }`}
-                    >
-                      <span className="w-8 h-8 rounded-full bg-rose-light flex items-center justify-center text-sm font-bold text-primary">
-                        {option.label}
-                      </span>
-                      <span className="font-serif">{option.full}</span>
-                    </button>
+                <div className="flex justify-center gap-4">
+                  {["Vaibhav", "Sejal", "Both"].map((option) => (
+                    <label key={option} className="cursor-pointer">
+                      <input
+                        type="radio"
+                        name="emotional"
+                        value={option}
+                        checked={formData.emotional === option}
+                        onChange={(e) => setFormData({ ...formData, emotional: e.target.value })}
+                        className="hidden"
+                      />
+                      <div
+                        className="px-6 py-3 rounded-full transition-all"
+                        style={{
+                          background: formData.emotional === option ? "#B85940" : "#FFF8F3",
+                          color: formData.emotional === option ? "white" : "#6B4535",
+                          border: "1px solid",
+                          borderColor: formData.emotional === option ? "#B85940" : "#EEDDD3",
+                          fontFamily: "var(--font-serif)",
+                        }}
+                      >
+                        {option}
+                      </div>
+                    </label>
                   ))}
                 </div>
-                <p className="text-sm text-muted-foreground mt-2 italic">
-                  Reveal after the wedding 😉
-                </p>
               </div>
 
-              {/* Mood Selection */}
-              <div className="mb-8">
-                <h3 className="text-lg font-sans text-muted-foreground uppercase tracking-widest mb-2">
+              {/* Wedding Mood */}
+              <div
+                className="rounded-2xl p-6"
+                style={{
+                  background: "#FFFFFF",
+                  border: "1px solid #EEDDD3",
+                }}
+              >
+                <h3
+                  style={{
+                    fontFamily: "var(--font-serif)",
+                    fontWeight: 600,
+                    fontSize: "1.25rem",
+                    color: "#B85940",
+                    marginBottom: "0.5rem",
+                  }}
+                >
                   Your Wedding Mood
                 </h3>
-                <p className="text-muted-foreground font-serif mb-4">
+                <p
+                  style={{
+                    fontFamily: "var(--font-serif)",
+                    color: "#9E7060",
+                    marginBottom: "1rem",
+                  }}
+                >
                   {"I'm coming for..."}
                 </p>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    "The Food 🍛",
-                    "Dance Floor 💃",
-                    "The Love ❤️",
-                    "All of It ✨",
-                  ].map((mood) => (
-                    <button
-                      key={mood}
-                      type="button"
-                      onClick={() => handleMoodToggle(mood)}
-                      className={`px-4 py-2 rounded-full border text-sm font-serif transition-all ${
-                        formData.mood.includes(mood)
-                          ? "bg-gold text-card border-gold"
-                          : "border-border hover:border-gold"
-                      }`}
-                    >
-                      {mood}
-                    </button>
+                <div className="grid grid-cols-2 gap-3">
+                  {["The Food", "Dance Floor", "The Love", "All of It"].map((mood) => (
+                    <label key={mood} className="cursor-pointer">
+                      <input
+                        type="radio"
+                        name="mood"
+                        value={mood}
+                        checked={formData.mood === mood}
+                        onChange={(e) => setFormData({ ...formData, mood: e.target.value })}
+                        className="hidden"
+                      />
+                      <div
+                        className="px-4 py-3 rounded-xl text-center transition-all"
+                        style={{
+                          background: formData.mood === mood ? "#B85940" : "transparent",
+                          color: formData.mood === mood ? "white" : "#6B4535",
+                          border: "1px solid",
+                          borderColor: formData.mood === mood ? "#B85940" : "#EEDDD3",
+                          fontFamily: "var(--font-serif)",
+                        }}
+                      >
+                        {mood}
+                      </div>
+                    </label>
                   ))}
                 </div>
               </div>
 
               {/* Wishes */}
-              <div className="mb-8">
-                <h3 className="text-lg font-sans text-muted-foreground uppercase tracking-widest mb-2">
+              <div
+                className="rounded-2xl p-6"
+                style={{
+                  background: "#FFFFFF",
+                  border: "1px solid #EEDDD3",
+                }}
+              >
+                <h3
+                  style={{
+                    fontFamily: "var(--font-serif)",
+                    fontWeight: 600,
+                    fontSize: "1.25rem",
+                    color: "#B85940",
+                    marginBottom: "0.5rem",
+                  }}
+                >
                   Leave Us a Note
                 </h3>
-                <p className="text-muted-foreground font-serif mb-4">
-                  Share a wish or memory.
+                <p
+                  style={{
+                    fontFamily: "var(--font-serif)",
+                    color: "#9E7060",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  Share a wish or memory
                 </p>
                 <textarea
                   value={formData.wishes}
                   onChange={(e) => setFormData({ ...formData, wishes: e.target.value })}
-                  className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all font-serif resize-none"
                   rows={3}
-                  placeholder="Your heartfelt message..."
+                  placeholder="Write something from the heart..."
+                  className="w-full px-4 py-3 rounded-lg outline-none resize-none"
+                  style={{
+                    background: "#FFF8F3",
+                    border: "1px solid #EEDDD3",
+                    fontFamily: "var(--font-serif)",
+                    fontSize: "1rem",
+                    color: "#2E1810",
+                  }}
                 />
-                <p className="text-sm text-muted-foreground mt-2">
-                  🔥 This becomes a digital memory book.
-                </p>
               </div>
 
               {/* Advice */}
-              <div className="mb-8">
-                <h3 className="text-lg font-sans text-muted-foreground uppercase tracking-widest mb-2">
+              <div
+                className="rounded-2xl p-6"
+                style={{
+                  background: "#FFFFFF",
+                  border: "1px solid #EEDDD3",
+                }}
+              >
+                <h3
+                  style={{
+                    fontFamily: "var(--font-serif)",
+                    fontWeight: 600,
+                    fontSize: "1.25rem",
+                    color: "#B85940",
+                    marginBottom: "0.5rem",
+                  }}
+                >
                   Words for Forever
                 </h3>
-                <p className="text-muted-foreground font-serif mb-4">
-                  Advice for married life.
+                <p
+                  style={{
+                    fontFamily: "var(--font-serif)",
+                    color: "#9E7060",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  Advice for married life
                 </p>
                 <textarea
                   value={formData.advice}
                   onChange={(e) => setFormData({ ...formData, advice: e.target.value })}
-                  className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all font-serif resize-none"
                   rows={3}
-                  placeholder="Your wisdom for the couple..."
+                  placeholder="One piece of advice..."
+                  className="w-full px-4 py-3 rounded-lg outline-none resize-none"
+                  style={{
+                    background: "#FFF8F3",
+                    border: "1px solid #EEDDD3",
+                    fontFamily: "var(--font-serif)",
+                    fontSize: "1rem",
+                    color: "#2E1810",
+                  }}
                 />
               </div>
 
-              {/* Submit */}
-              <motion.button
+              {/* Submit Button */}
+              <button
                 type="submit"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full py-4 rounded-lg bg-gradient-to-r from-gold to-gold-dark text-card font-sans font-semibold text-lg flex items-center justify-center gap-3 shadow-lg hover:shadow-xl transition-shadow"
+                disabled={isSubmitting}
+                className="w-full py-4 rounded-full flex items-center justify-center gap-3 transition-all"
+                style={{
+                  background: "#B85940",
+                  color: "white",
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "0.75rem",
+                  letterSpacing: "0.2em",
+                  textTransform: "uppercase",
+                  opacity: isSubmitting ? 0.7 : 1,
+                  boxShadow: "0 6px 24px rgba(184,89,64,0.35)",
+                }}
               >
-                <Heart className="w-5 h-5" />
-                Send Love
-                <Send className="w-5 h-5" />
-              </motion.button>
+                {isSubmitting ? (
+                  "Sending..."
+                ) : (
+                  <>
+                    <Send size={16} />
+                    Send RSVP
+                  </>
+                )}
+              </button>
             </motion.form>
           )}
         </AnimatePresence>
       </div>
     </section>
-  );
+  )
 }

@@ -1,49 +1,71 @@
-"use client";
+"use client"
 
-import { motion } from "framer-motion";
-import { Heart } from "lucide-react";
+import { motion } from "framer-motion"
+import { Heart } from "lucide-react"
 
 export function Footer() {
   return (
-    <footer className="py-16 px-4 bg-gradient-to-b from-background to-secondary/30">
-      <div className="max-w-4xl mx-auto text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-8"
+    <footer
+      className="py-16 px-4 text-center"
+      style={{ background: "#5C2233", color: "white" }}
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+      >
+        <h2
+          style={{
+            fontFamily: "var(--font-script)",
+            fontSize: "clamp(3rem, 12vw, 5rem)",
+            color: "#E8C07A",
+            lineHeight: 1.2,
+          }}
         >
-          <h2 className="text-4xl md:text-5xl font-script text-gold-dark">
-            Vaibhav & Sejal
-          </h2>
-          <div className="flex items-center justify-center gap-2 mt-4">
-            <div className="h-px w-16 bg-gold/50" />
-            <Heart className="w-6 h-6 text-rose fill-rose" />
-            <div className="h-px w-16 bg-gold/50" />
-          </div>
-        </motion.div>
+          Vaibhav
+        </h2>
+        <span
+          style={{
+            fontFamily: "var(--font-script)",
+            fontSize: "clamp(2rem, 8vw, 3rem)",
+            color: "#C9963E",
+            display: "block",
+            margin: "0.5rem 0",
+          }}
+        >
+          &
+        </span>
+        <h2
+          style={{
+            fontFamily: "var(--font-script)",
+            fontSize: "clamp(3rem, 12vw, 5rem)",
+            color: "#E8C07A",
+            lineHeight: 1.2,
+          }}
+        >
+          Sejal
+        </h2>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="text-sm font-sans text-muted-foreground"
-        >
-          MADE WITH{" "}
-          <Heart className="w-4 h-4 inline-block text-rose fill-rose mx-1" />{" "}
-        </motion.p>
+        {/* Divider */}
+        <div className="flex items-center justify-center gap-4 mt-8">
+          <div className="h-px w-16" style={{ background: "rgba(232,192,122,0.4)" }} />
+          <Heart size={16} style={{ color: "#E8C07A" }} fill="#E8C07A" />
+          <div className="h-px w-16" style={{ background: "rgba(232,192,122,0.4)" }} />
+        </div>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="text-xs font-sans text-muted-foreground/70 mt-4"
+        <p
+          className="mt-8"
+          style={{
+            fontFamily: "var(--font-serif)",
+            fontSize: "1rem",
+            color: "rgba(255,255,255,0.7)",
+            fontStyle: "italic",
+          }}
         >
-          © 2026 Vaibhav & Sejal Wedding
-        </motion.p>
-      </div>
+          May 8, 2026
+        </p>
+      </motion.div>
     </footer>
-  );
+  )
 }
