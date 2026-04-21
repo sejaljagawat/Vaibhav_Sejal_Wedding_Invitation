@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Hero } from "@/components/wedding/hero"
 import { SaveTheDate } from "@/components/wedding/save-the-date"
-import { Memories } from "@/components/wedding/memories"
+import { Gallery } from "@/components/wedding/gallery"
 import { Ceremonies } from "@/components/wedding/ceremonies"
 import { RSVP } from "@/components/wedding/rsvp"
 import { Footer } from "@/components/wedding/footer"
@@ -27,14 +27,13 @@ export default function WeddingPage() {
 
       {/* Main Content */}
       <main
-        className={`min-h-screen transition-opacity duration-800 ${
-          showMain ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+        className={`min-h-screen transition-opacity duration-800 ${showMain ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
         style={{ display: showMain ? "block" : "none" }}
       >
         <Hero />
         <SaveTheDate />
-        <Memories />
+        <Gallery />
         <Ceremonies />
         <RSVP />
         <Footer />
