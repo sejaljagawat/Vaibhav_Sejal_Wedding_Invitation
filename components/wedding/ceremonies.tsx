@@ -5,7 +5,7 @@ import { MapPin, Music, Heart, PartyPopper, FlowerIcon } from "lucide-react";
 
 const events = [
   {
-    date: "19th May, 2026",
+    date: "19th Nov, 2026",
     time: "10 AM",
     name: "Haldi",
     venue: "Kanha Shree Gadern, Indore",
@@ -13,7 +13,7 @@ const events = [
     mapsQuery: "Grand+Celebration+Hall,+Mumbai",
   },
   {
-    date: "19th May, 2026",
+    date: "19th Nov, 2026",
     name: "Reception",
     time: "7 PM Onwards",
     venue: "Kanha Shree Gadern, Indore",
