@@ -144,7 +144,7 @@ function ScratchHeart({ label, value, onReveal }: ScratchHeartProps) {
       }}
     >
       {/* Hidden content */}
-      <div className="absolute inset-0 flex flex-col justify-center items-center z-[1] ">
+      <div className="absolute inset-0 flex flex-col justify-center items-center z- 1 ">
         <span
           style={{
             fontFamily: "'Tenor Sans', sans-serif",
@@ -174,7 +174,7 @@ function ScratchHeart({ label, value, onReveal }: ScratchHeartProps) {
       {/* Scratch canvas */}
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 z-[2] w-full h-full transition-opacity duration-1000"
+        className="absolute inset-0 z- 2 w-full h-full transition-opacity duration-1000"
       />
     </div>
   )

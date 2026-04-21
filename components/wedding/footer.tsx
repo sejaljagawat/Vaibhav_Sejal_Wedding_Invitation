@@ -62,12 +62,12 @@ export function Footer() {
       >
         MADE WITH <span style={{ color: "#e74c3c" }}>&#9829;</span> BY{" "}
         <a
-          href="https://www.instagram.com/house_of_invitation_"
+          href="https://www.instagram.com/shahvaibhav_348"
           target="_blank"
           rel="noopener noreferrer"
           style={{ color: "#E8C07A", textDecoration: "none" }}
         >
-          HOUSE OF INVITATION
+          Vaibhav Shah
         </a>
       </motion.div>
     </footer>
