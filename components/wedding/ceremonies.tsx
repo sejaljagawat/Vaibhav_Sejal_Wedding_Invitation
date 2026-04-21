@@ -1,30 +1,50 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MapPin, Music, Heart, PartyPopper } from "lucide-react";
+import { MapPin, Music, Heart, PartyPopper, FlowerIcon } from "lucide-react";
 
 const events = [
   {
-    date: "07th May, 2026",
-    name: "Sangeet",
-    venue: "Grand Celebration Hall, Mumbai",
-    icon: Music,
+    date: "19th May, 2026",
+    time: "10 AM",
+    name: "Haldi",
+    venue: "Kanha Shree Gadern, Indore",
+    icon: FlowerIcon,
     mapsQuery: "Grand+Celebration+Hall,+Mumbai",
   },
   {
-    date: "08th May, 2026",
-    name: "Marriage",
-    venue: "Royal Garden Resort, Mumbai",
-    icon: Heart,
+    date: "19th May, 2026",
+    name: "Reception",
+    time: "7 PM Onwards",
+    venue: "Kanha Shree Gadern, Indore",
+    icon: PartyPopper,
     mapsQuery: "Royal+Garden+Resort,+Mumbai",
   },
   {
-    date: "10th May, 2026",
-    name: "Reception",
-    venue: "The Imperial Banquet, Mumbai",
-    icon: PartyPopper,
+    date: "20th Nov, 2026",
+    time: "9 AM ",
+    name: "Ganesh Puja & Mayra",
+    venue: "Home, Indore",
+    icon: Heart,
     mapsQuery: "The+Imperial+Banquet,+Mumbai",
   },
+  {
+    date: "20th Nov, 2026",
+    time: "7 PM Onwards",
+    name: "Prossesion/Binola",
+    venue: "Home, Indore",
+    icon: Heart,
+    mapsQuery: "The+Imperial+Banquet,+Mumbai",
+  },
+  {
+    date: "21st Nov, 2026",
+    time: "9 AM Onwards",
+    name: "Ring Ceremony & Phere",
+    venue: "Motagaon, Raj",
+    icon: Heart,
+    mapsQuery: "The+Imperial+Banquet,+Mumbai",
+  },
+
 ];
 
 export function Ceremonies() {
