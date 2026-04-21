@@ -203,7 +203,7 @@ export function Hero() {
               marginTop: "0.5rem",
             }}
           >
-            Daughter of Mr. Jammbu Kumar Jagawat & Mrs. Chanda
+            Daughter of Mr. Jambu Kumar Jagawat & Mrs. Chanda
           </p>
           <p
             style={{
