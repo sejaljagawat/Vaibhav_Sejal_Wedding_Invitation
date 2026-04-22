@@ -10,7 +10,7 @@ const events = [
     name: "Haldi",
     venue: "Kanha Shree Garden, Indore",
     mapsQuery: "Kanha+Shree+Garden+Indore",
-    image: "https://www.istockphoto.com/photo/family-and-friends-dance-with-bride-and-groom-during-their-haldi-ceremony-gm2127645644-92127645644?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fwedding-dance&utm_term=wedding+dance%3A%3Aaffiliate-layout-optim%3Ab%3Abba8ef99-9a31-4105-8084-954e36ecb506",
+    image: "https://ibb.co/9kqm9Cw9",
     imageAlt: "Haldi ceremony with turmeric paste and flowers",
   },
   {
@@ -19,7 +19,7 @@ const events = [
     time: "7 PM Onwards",
     venue: "Kanha Shree Garden, Indore",
     mapsQuery: "Kanha+Shree+Garden+Indore",
-    image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&q=80",
+    image: "https://ibb.co/QgW2cny",
     imageAlt: "Elegant wedding reception with lights and decor",
   },
   {
@@ -37,7 +37,7 @@ const events = [
     name: "Procession / Binola",
     venue: "Home, Indore",
     mapsQuery: "Indore+Madhya+Pradesh",
-    image: "https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=400&q=80",
+    image: "https://unsplash.com/photos/joyful-girl-surrounded-by-dancing-friends-at-disco-WkIBnUq35xY",
     imageAlt: "Wedding procession with lights and celebration",
   },
   {
