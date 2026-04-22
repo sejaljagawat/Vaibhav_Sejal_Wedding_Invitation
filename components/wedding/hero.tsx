@@ -159,7 +159,7 @@ export function Hero() {
               marginTop: "0.2rem",
             }}
           >
-            (Grandson of Shankar Lalji Shah & Late Smt. Suryakanta)
+            (Grandson of Shankar Lalji Shah & Late Smt. Suryakanta Shah)
           </p>
         </div>
 
@@ -203,7 +203,7 @@ export function Hero() {
               marginTop: "0.5rem",
             }}
           >
-            Daughter of Mr. Jambu Kumar Jagawat & Mrs. Chanda
+            Daughter of Mr. Jambu Kumar Jagawat & Mrs. Chanda Jagawat
           </p>
           <p
             style={{
@@ -215,7 +215,7 @@ export function Hero() {
               marginTop: "0.2rem",
             }}
           >
-            (Granddaughter of Late Shri Marutirao Ghasari & Smt Chanda, Smt Ranjana)
+            (Granddaughter of Late Shri Surajmal ji Jagawat & Smt Kachari devi Jagawat)
           </p>
         </div>
       </motion.div>
