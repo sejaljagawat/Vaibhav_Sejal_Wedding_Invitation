@@ -10,7 +10,7 @@ const events = [
     name: "Haldi",
     venue: "Kanha Shree Garden, Indore",
     mapsQuery: "Kanha+Shree+Garden+Indore",
-    image: "https://ibb.co/9kqm9Cw9",
+    image: "https://i.ibb.co/TfQVTR9/Haldi.jpg",
     imageAlt: "Haldi ceremony with turmeric paste and flowers",
   },
   {
@@ -19,7 +19,7 @@ const events = [
     time: "7 PM Onwards",
     venue: "Kanha Shree Garden, Indore",
     mapsQuery: "Kanha+Shree+Garden+Indore",
-    image: "https://ibb.co/QgW2cny",
+    image: "https://i.ibb.co/TxHDBFKB/Reception.jpg",
     imageAlt: "Elegant wedding reception with lights and decor",
   },
   {
