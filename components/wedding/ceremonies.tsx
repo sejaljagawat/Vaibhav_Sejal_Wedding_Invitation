@@ -1,50 +1,54 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MapPin, Music, Heart, PartyPopper, FlowerIcon } from "lucide-react";
+import { MapPin, Clock } from "lucide-react";
 
 const events = [
   {
     date: "19th Nov, 2026",
     time: "10 AM",
     name: "Haldi",
-    venue: "Kanha Shree Gadern, Indore",
-    icon: FlowerIcon,
-    mapsQuery: "Grand+Celebration+Hall,+Mumbai",
+    venue: "Kanha Shree Garden, Indore",
+    mapsQuery: "Kanha+Shree+Garden+Indore",
+    image: "https://www.istockphoto.com/photo/family-and-friends-dance-with-bride-and-groom-during-their-haldi-ceremony-gm2127645644-92127645644?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_top&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fwedding-dance&utm_term=wedding+dance%3A%3Aaffiliate-layout-optim%3Ab%3Abba8ef99-9a31-4105-8084-954e36ecb506",
+    imageAlt: "Haldi ceremony with turmeric paste and flowers",
   },
   {
     date: "19th Nov, 2026",
     name: "Reception",
     time: "7 PM Onwards",
-    venue: "Kanha Shree Gadern, Indore",
-    icon: PartyPopper,
-    mapsQuery: "Royal+Garden+Resort,+Mumbai",
+    venue: "Kanha Shree Garden, Indore",
+    mapsQuery: "Kanha+Shree+Garden+Indore",
+    image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&q=80",
+    imageAlt: "Elegant wedding reception with lights and decor",
   },
   {
     date: "20th Nov, 2026",
-    time: "9 AM ",
+    time: "9 AM",
     name: "Ganesh Puja & Mayra",
     venue: "Home, Indore",
-    icon: Heart,
-    mapsQuery: "The+Imperial+Banquet,+Mumbai",
+    mapsQuery: "Indore+Madhya+Pradesh",
+    image: "https://unsplash.com/photos/white-and-gold-hindu-deity-figurine-ot2654qRnNU",
+    imageAlt: "Ganesh Puja with diyas and flowers",
   },
   {
     date: "20th Nov, 2026",
     time: "7 PM Onwards",
-    name: "Prossesion/Binola",
+    name: "Procession / Binola",
     venue: "Home, Indore",
-    icon: Heart,
-    mapsQuery: "The+Imperial+Banquet,+Mumbai",
+    mapsQuery: "Indore+Madhya+Pradesh",
+    image: "https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=400&q=80",
+    imageAlt: "Wedding procession with lights and celebration",
   },
   {
     date: "21st Nov, 2026",
     time: "9 AM Onwards",
     name: "Ring Ceremony & Phere",
-    venue: "Motagaon, Raj",
-    icon: Heart,
-    mapsQuery: "The+Imperial+Banquet,+Mumbai",
+    venue: "Motagaon, Rajasthan",
+    mapsQuery: "Motagaon+Rajasthan",
+    image: "https://images.unsplash.com/photo-1544078751-58fee2d8a03b?w=400&q=80",
+    imageAlt: "Ring ceremony with flowers and rituals",
   },
-
 ];
 
 export function Ceremonies() {
@@ -88,12 +92,29 @@ export function Ceremonies() {
                   }`}
               >
                 {/* Content Card */}
-                <div className={`flex-1 ${index % 2 === 0 ? "md:text-right" : "md:text-left"}`}>
-                  <div className="bg-card p-6 rounded-xl shadow-lg border border-gold/20 inline-block">
-                    <p className="text-sm font-sans text-gold-dark uppercase tracking-widest mb-2">
+                <div
+                  className={`flex-1 ${index % 2 === 0 ? "md:text-right" : "md:text-left"
+                    }`}
+                >
+                  <div className="bg-card p-6 rounded-xl shadow-lg border border-gold/20 inline-block w-full max-w-sm">
+                    <p className="text-sm font-sans text-gold-dark uppercase tracking-widest mb-1">
                       {event.date}
                     </p>
-                    <h3 className="text-2xl font-script text-primary mb-3">{event.name}</h3>
+
+                    {/* Time Badge */}
+                    <div
+                      className={`flex items-center gap-1.5 mb-3 ${index % 2 === 0 ? "md:justify-end" : "md:justify-start"
+                        } justify-start`}
+                    >
+                      <Clock className="w-3.5 h-3.5 text-gold" />
+                      <span className="text-xs font-sans text-gold font-medium tracking-wide">
+                        {event.time}
+                      </span>
+                    </div>
+
+                    <h3 className="text-2xl font-script text-primary mb-3">
+                      {event.name}
+                    </h3>
                     <p className="text-sm font-serif text-muted-foreground mb-3">
                       Venue: {event.venue}
                     </p>
@@ -109,9 +130,15 @@ export function Ceremonies() {
                   </div>
                 </div>
 
-                {/* Icon Circle */}
-                <div className="relative z-10 flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-gold to-gold-dark shadow-lg">
-                  <event.icon className="w-8 h-8 text-card" />
+                {/* Image Circle — replaces the icon circle */}
+                <div className="relative z-10 flex-shrink-0 w-20 h-20 rounded-full overflow-hidden border-4 border-gold shadow-xl">
+                  <img
+                    src={event.image}
+                    alt={event.imageAlt}
+                    className="w-full h-full object-cover"
+                  />
+                  {/* Gold overlay ring */}
+                  <div className="absolute inset-0 rounded-full ring-2 ring-gold/40 ring-inset" />
                 </div>
 
                 {/* Spacer for alignment */}
