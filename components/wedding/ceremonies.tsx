@@ -28,7 +28,7 @@ const events = [
     name: "Ganesh Puja & Mayra",
     venue: "Home, Indore",
     mapsQuery: "Indore+Madhya+Pradesh",
-    image: "https://unsplash.com/photos/white-and-gold-hindu-deity-figurine-ot2654qRnNU",
+    image: "https://i.ibb.co/0Rm6rdXx/ganesh.jpg",
     imageAlt: "Ganesh Puja with diyas and flowers",
   },
   {
@@ -37,7 +37,7 @@ const events = [
     name: "Procession / Binola",
     venue: "Home, Indore",
     mapsQuery: "Indore+Madhya+Pradesh",
-    image: "https://unsplash.com/photos/joyful-girl-surrounded-by-dancing-friends-at-disco-WkIBnUq35xY",
+    image: "https://i.ibb.co/rfNP0YNh/binola.jpg",
     imageAlt: "Wedding procession with lights and celebration",
   },
   {
@@ -46,7 +46,7 @@ const events = [
     name: "Ring Ceremony & Phere",
     venue: "Motagaon, Rajasthan",
     mapsQuery: "Motagaon+Rajasthan",
-    image: "https://images.unsplash.com/photo-1544078751-58fee2d8a03b?w=400&q=80",
+    image: "https://i.ibb.co/MdvwTCP/bf92b8341511b0a141eef0dd327db755.jpg",
     imageAlt: "Ring ceremony with flowers and rituals",
   },
 ];
