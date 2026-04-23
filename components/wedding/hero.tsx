@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import Image from "next/image"
+import { motion } from "framer-motion";
+import Image from "next/image";
 
 export function Hero() {
   return (
@@ -26,22 +26,10 @@ export function Hero() {
 
       {/* Corner Frame */}
       <div className="absolute inset-5 pointer-events-none z-[2]">
-        <div
-          className="absolute top-0 left-0 w-15 h-15 opacity-50"
-          style={{ borderWidth: "1px 0 0 1px", borderStyle: "solid", borderColor: "#C9963E" }}
-        />
-        <div
-          className="absolute top-0 right-0 w-15 h-15 opacity-50"
-          style={{ borderWidth: "1px 1px 0 0", borderStyle: "solid", borderColor: "#C9963E" }}
-        />
-        <div
-          className="absolute bottom-0 left-0 w-15 h-15 opacity-50"
-          style={{ borderWidth: "0 0 1px 1px", borderStyle: "solid", borderColor: "#C9963E" }}
-        />
-        <div
-          className="absolute bottom-0 right-0 w-15 h-15 opacity-50"
-          style={{ borderWidth: "0 1px 1px 0", borderStyle: "solid", borderColor: "#C9963E" }}
-        />
+        <div className="absolute top-0 left-0 w-15 h-15 opacity-50" style={{ borderWidth: "1px 0 0 1px", borderStyle: "solid", borderColor: "#C9963E" }} />
+        <div className="absolute top-0 right-0 w-15 h-15 opacity-50" style={{ borderWidth: "1px 1px 0 0", borderStyle: "solid", borderColor: "#C9963E" }} />
+        <div className="absolute bottom-0 left-0 w-15 h-15 opacity-50" style={{ borderWidth: "0 0 1px 1px", borderStyle: "solid", borderColor: "#C9963E" }} />
+        <div className="absolute bottom-0 right-0 w-15 h-15 opacity-50" style={{ borderWidth: "0 1px 1px 0", borderStyle: "solid", borderColor: "#C9963E" }} />
       </div>
 
       {/* Hero Card */}
@@ -60,28 +48,13 @@ export function Hero() {
         }}
       >
         {/* Corner Decorations */}
-        <div
-          className="absolute top-4 left-4 w-8 h-8 rounded-tl"
-          style={{ borderWidth: "1px 0 0 1px", borderStyle: "solid", borderColor: "rgba(201,150,62,0.35)" }}
-        />
-        <div
-          className="absolute top-4 right-4 w-8 h-8 rounded-tr"
-          style={{ borderWidth: "1px 1px 0 0", borderStyle: "solid", borderColor: "rgba(201,150,62,0.35)" }}
-        />
-        <div
-          className="absolute bottom-4 left-4 w-8 h-8 rounded-bl"
-          style={{ borderWidth: "0 0 1px 1px", borderStyle: "solid", borderColor: "rgba(201,150,62,0.35)" }}
-        />
-        <div
-          className="absolute bottom-4 right-4 w-8 h-8 rounded-br"
-          style={{ borderWidth: "0 1px 1px 0", borderStyle: "solid", borderColor: "rgba(201,150,62,0.35)" }}
-        />
+        <div className="absolute top-4 left-4 w-8 h-8" style={{ borderWidth: "1px 0 0 1px", borderStyle: "solid", borderColor: "rgba(201,150,62,0.35)" }} />
+        <div className="absolute top-4 right-4 w-8 h-8" style={{ borderWidth: "1px 1px 0 0", borderStyle: "solid", borderColor: "rgba(201,150,62,0.35)" }} />
+        <div className="absolute bottom-4 left-4 w-8 h-8" style={{ borderWidth: "0 0 1px 1px", borderStyle: "solid", borderColor: "rgba(201,150,62,0.35)" }} />
+        <div className="absolute bottom-4 right-4 w-8 h-8" style={{ borderWidth: "0 1px 1px 0", borderStyle: "solid", borderColor: "rgba(201,150,62,0.35)" }} />
 
         {/* Ganesh Icon */}
-        <motion.div
-          animate={{ y: [0, -6, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        >
+        <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 4, repeat: Infinity }}>
           <Image
             src="https://pub-1953a6673e864f3488c645252f75de98.r2.dev/Shriya%20%26%20Ashutosh/Vianyak%20png.png"
             alt="Shri Ganesh"
@@ -123,131 +96,129 @@ export function Hero() {
           we joyfully request your gracious presence on the wedding celebration of
         </p>
 
-        {/* Groom */}
-        <div className="w-full mb-2">
-          <span
-            className="shimmer-gold block"
-            style={{
-              fontFamily: "'Great Vibes', cursive",
-              fontSize: "clamp(3rem, 11vw, 4.8rem)",
-              lineHeight: 1.3,
-              letterSpacing: "0.02em",
-              padding: "0.2rem 0",
-            }}
-          >
-            Vaibhav
-          </span>
-          <p
-            style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "0.9rem",
-              fontWeight: 500,
-              color: "#2E1810",
-              lineHeight: 1.4,
-              marginTop: "0.5rem",
-            }}
-          >
-            Son of <strong>Mr. Abhay Shah & Mrs. Kiran Shah</strong>
-          </p>
-          <p
-            style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "0.95rem",
-              fontStyle: "italic",
-              color: "#2E1810",
-              lineHeight: 1.3,
-              marginTop: "0.2rem",
-            }}
-          >
-            (Grandson of Late Shankar Lalji Shah & Late Smt. Suryakanta Shah)
-          </p>
-        </div>
+        {/* ⭐ WATERMARK ADDED ONLY HERE */}
+        <div className="relative w-full flex flex-col items-center justify-center">
 
-        {/* Ampersand */}
-        <div className="flex items-center justify-center gap-4 my-6 w-full">
-          <div className="h-px w-10" style={{ background: "#EEDDD3" }} />
-          <span
-            style={{
-              fontFamily: "'Great Vibes', cursive",
-              fontSize: "2.2rem",
-              color: "#C9963E",
-              lineHeight: 1,
-            }}
-          >
-            &
-          </span>
-          <div className="h-px w-10" style={{ background: "#EEDDD3" }} />
-        </div>
+          {/* watermark logo behind names */}
+          <Image
+            src="/VS_Logo.png"
+            alt="Watermark Logo"
+            width={700}
+            height={700}
+            className="absolute opacity-[0.3] z-0 scale-150"
+          />
 
-        {/* Bride */}
-        <div className="w-full">
-          <span
-            className="shimmer-gold block"
-            style={{
-              fontFamily: "'Great Vibes', serif",
-              fontSize: "clamp(3rem, 11vw, 4.8rem)",
-              lineHeight: 1.3,
-              letterSpacing: "0.02em",
-              padding: "0.2rem 0",
-            }}
-          >
-            Sejal
-          </span>
-          <p
-            style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "0.9rem",
-              fontWeight: 500,
-              color: "#2E1810",
-              lineHeight: 1.4,
-              marginTop: "0.5rem",
-            }}
-          >
-            Daughter of <strong>Mr. Jambu Kumar Jagawat & Mrs. Chanda Jagawat</strong>
-          </p>
-          <p
-            style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "0.95rem",
-              fontStyle: "italic",
-              color: "#2E1810",
-              lineHeight: 1.3,
-              marginTop: "0.2rem",
-            }}
-          >
-            (Granddaughter of Late Shri Surajmal ji Jagawat & Late Smt. Kachari devi Jagawat)
-          </p>
+          {/* Groom */}
+          <div className="w-full mb-2 relative z-10">
+            <span
+              className="shimmer-gold block"
+              style={{
+                fontFamily: "'Great Vibes', cursive",
+                fontSize: "clamp(3rem, 11vw, 4.8rem)",
+                lineHeight: 1.3,
+                letterSpacing: "0.02em",
+                padding: "0.2rem 0",
+              }}
+            >
+              Vaibhav
+            </span>
+
+            <p
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "0.9rem",
+                fontWeight: 500,
+                color: "#2E1810",
+                lineHeight: 1.4,
+                marginTop: "0.5rem",
+              }}
+            >
+              Son of <strong>Mr. Abhay Shah & Mrs. Kiran Shah</strong>
+            </p>
+
+            <p
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "0.95rem",
+                fontStyle: "italic",
+                color: "#2E1810",
+                lineHeight: 1.3,
+                marginTop: "0.2rem",
+              }}
+            >
+              (Grandson of Late Shankar Lalji Shah & Late Smt. Suryakanta Shah)
+            </p>
+          </div>
+
+          {/* Ampersand */}
+          <div className="flex items-center justify-center gap-4 my-6 w-full relative z-10">
+            <div className="h-px w-10" style={{ background: "#EEDDD3" }} />
+            <span
+              style={{
+                fontFamily: "'Great Vibes', cursive",
+                fontSize: "2.2rem",
+                color: "#C9963E",
+              }}
+            >
+              &
+            </span>
+            <div className="h-px w-10" style={{ background: "#EEDDD3" }} />
+          </div>
+
+          {/* Bride */}
+          <div className="w-full relative z-10">
+            <span
+              className="shimmer-gold block"
+              style={{
+                fontFamily: "'Great Vibes', serif",
+                fontSize: "clamp(3rem, 11vw, 4.8rem)",
+                lineHeight: 1.3,
+                letterSpacing: "0.02em",
+                padding: "0.2rem 0",
+              }}
+            >
+              Sejal
+            </span>
+
+            <p
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "0.9rem",
+                fontWeight: 500,
+                color: "#2E1810",
+                lineHeight: 1.4,
+                marginTop: "0.5rem",
+              }}
+            >
+              Daughter of <strong>Mr. Jambu Kumar Jagawat & Mrs. Chanda Jagawat</strong>
+            </p>
+
+            <p
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "0.95rem",
+                fontStyle: "italic",
+                color: "#2E1810",
+                lineHeight: 1.3,
+                marginTop: "0.2rem",
+              }}
+            >
+              (Granddaughter of Late Shri Surajmal ji Jagawat & Late Smt. Kachari devi Jagawat)
+            </p>
+          </div>
         </div>
       </motion.div>
 
       {/* Scroll Cue */}
       <motion.div
         animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 2, repeat: Infinity }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-[5] flex flex-col items-center gap-1 opacity-70"
       >
-        <p
-          style={{
-            fontFamily: "'Tenor Sans', sans-serif",
-            fontSize: "0.6rem",
-            letterSpacing: "0.3em",
-            textTransform: "uppercase",
-            color: "#6B4535",
-          }}
-        >
+        <p style={{ fontFamily: "'Tenor Sans', sans-serif", fontSize: "0.6rem", letterSpacing: "0.3em", color: "#6B4535" }}>
           Scroll
         </p>
-        <svg
-          width="18"
-          height="18"
-          fill="none"
-          stroke="#6B4535"
-          strokeWidth="2"
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-        </svg>
       </motion.div>
     </section>
-  )
+  );
 }
