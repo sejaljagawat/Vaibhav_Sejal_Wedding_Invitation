@@ -128,9 +128,9 @@ export function Hero() {
           <span
             className="shimmer-gold block"
             style={{
-              fontFamily: "'Pinyon Script', cursive",
+              fontFamily: "'Great Vibes', cursive",
               fontSize: "clamp(3rem, 11vw, 4.8rem)",
-              lineHeight: 1.1,
+              lineHeight: 1.3,
               letterSpacing: "0.02em",
               padding: "0.2rem 0",
             }}
@@ -147,7 +147,7 @@ export function Hero() {
               marginTop: "0.5rem",
             }}
           >
-            Son of Mr. Abhay Shah & Mrs. Kiran Shah
+            Son of <strong>Mr. Abhay Shah & Mrs. Kiran Shah</strong>
           </p>
           <p
             style={{
@@ -159,7 +159,7 @@ export function Hero() {
               marginTop: "0.2rem",
             }}
           >
-            (Grandson of Shankar Lalji Shah & Late Smt. Suryakanta Shah)
+            (Grandson of Late Shankar Lalji Shah & Late Smt. Suryakanta Shah)
           </p>
         </div>
 
@@ -184,9 +184,9 @@ export function Hero() {
           <span
             className="shimmer-gold block"
             style={{
-              fontFamily: "'Pinyon Script', cursive",
+              fontFamily: "'Great Vibes', serif",
               fontSize: "clamp(3rem, 11vw, 4.8rem)",
-              lineHeight: 1.1,
+              lineHeight: 1.3,
               letterSpacing: "0.02em",
               padding: "0.2rem 0",
             }}
@@ -203,7 +203,7 @@ export function Hero() {
               marginTop: "0.5rem",
             }}
           >
-            Daughter of Mr. Jambu Kumar Jagawat & Mrs. Chanda Jagawat
+            Daughter of <strong>Mr. Jambu Kumar Jagawat & Mrs. Chanda Jagawat</strong>
           </p>
           <p
             style={{
@@ -215,7 +215,7 @@ export function Hero() {
               marginTop: "0.2rem",
             }}
           >
-            (Granddaughter of Late Shri Surajmal ji Jagawat & Smt Kachari devi Jagawat)
+            (Granddaughter of Late Shri Surajmal ji Jagawat & Late Smt. Kachari devi Jagawat)
           </p>
         </div>
       </motion.div>
