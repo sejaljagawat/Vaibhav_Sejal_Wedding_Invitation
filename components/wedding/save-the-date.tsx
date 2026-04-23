@@ -142,7 +142,7 @@ function ScratchHeart({ label, value, onReveal }: ScratchHeartProps) {
       style={{
         width: "35vw",
         maxWidth: "140px",
-        aspectRatio: "1.1 / 1",
+        aspectRatio: "1.1 / 1.2",
         maskImage: HEART_MASK,
         maskSize: "contain",
         maskRepeat: "no-repeat",

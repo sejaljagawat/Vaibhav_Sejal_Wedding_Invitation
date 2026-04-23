@@ -103,8 +103,7 @@ export function Ceremonies() {
 
                     {/* Time Badge */}
                     <div
-                      className={`flex items-center gap-1.5 mb-3 ${index % 2 === 0 ? "md:justify-end" : "md:justify-start"
-                        } justify-start`}
+                      className="flex items-center justify-center gap-1.5 mb-3"
                     >
                       <Clock className="w-3.5 h-3.5 text-gold" />
                       <span className="text-xs font-sans text-gold font-medium tracking-wide">
