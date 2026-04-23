@@ -19,7 +19,6 @@ function ScratchHeart({ label, value, onReveal }: ScratchHeartProps) {
   const revealedRef = useRef(false)
   const initializedRef = useRef(false)
 
-  // FIX 1: Use ResizeObserver to init canvas AFTER container has real dimensions
   useEffect(() => {
     const container = containerRef.current
     if (!container) return
@@ -29,11 +28,7 @@ function ScratchHeart({ label, value, onReveal }: ScratchHeartProps) {
       if (!canvas || initializedRef.current) return
 
       const rect = container.getBoundingClientRect()
-      const width = rect.width
-      const height = rect.height
-
-      // Don't init until we have real dimensions
-      if (width === 0 || height === 0) return
+      if (rect.width === 0 || rect.height === 0) return
 
       initializedRef.current = true
 
@@ -41,32 +36,27 @@ function ScratchHeart({ label, value, onReveal }: ScratchHeartProps) {
       if (!ctx) return
 
       const dpr = window.devicePixelRatio || 1
-      canvas.width = width * dpr
-      canvas.height = height * dpr
+      canvas.width = rect.width * dpr
+      canvas.height = rect.height * dpr
       ctx.scale(dpr, dpr)
 
       ctx.fillStyle = "#B85940"
-      ctx.fillRect(0, 0, width, height)
+      ctx.fillRect(0, 0, rect.width, rect.height)
 
       ctx.fillStyle = "rgba(255,255,255,0.7)"
       ctx.font = "bold 10px 'Tenor Sans', sans-serif"
       ctx.textAlign = "center"
-      ctx.fillText("SCRATCH", width / 2, height / 2 + 4)
+      ctx.fillText("SCRATCH", rect.width / 2, rect.height / 2 + 4)
     }
 
-    // Try immediately
     initCanvas()
 
-    // Also observe resize in case dimensions aren't ready yet
-    const observer = new ResizeObserver(() => {
-      initCanvas()
-    })
+    const observer = new ResizeObserver(initCanvas)
     observer.observe(container)
 
     return () => observer.disconnect()
   }, [])
 
-  // FIX 2: Separate effect for event listeners so they don't depend on canvas init
   useEffect(() => {
     const canvas = canvasRef.current
     const container = containerRef.current
@@ -80,8 +70,7 @@ function ScratchHeart({ label, value, onReveal }: ScratchHeartProps) {
     }
 
     const scratch = (e: MouseEvent | TouchEvent) => {
-      if (!isDrawingRef.current || revealedRef.current) return
-      if (!initializedRef.current) return
+      if (!isDrawingRef.current || revealedRef.current || !initializedRef.current) return
       if (e.cancelable && e.type.startsWith("touch")) e.preventDefault()
 
       const ctx = canvas.getContext("2d", { willReadFrequently: true })
@@ -100,14 +89,16 @@ function ScratchHeart({ label, value, onReveal }: ScratchHeartProps) {
 
     const checkProgress = (ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) => {
       if (revealedRef.current) return
-      const sampleRate = 32
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
       const pixels = imageData.data
       let transparentPixels = 0
-      for (let i = 3; i < pixels.length; i += sampleRate) {
+
+      for (let i = 3; i < pixels.length; i += 32) {
         if (pixels[i] < 128) transparentPixels++
       }
-      const totalPixels = pixels.length / sampleRate
+
+      const totalPixels = pixels.length / 32
+
       if ((transparentPixels / totalPixels) * 100 > 45) revealAll()
     }
 
@@ -115,6 +106,7 @@ function ScratchHeart({ label, value, onReveal }: ScratchHeartProps) {
       revealedRef.current = true
       canvas.style.transition = "opacity 1s"
       canvas.style.opacity = "0"
+
       setTimeout(() => {
         canvas.style.display = "none"
         onReveal()
@@ -163,10 +155,10 @@ function ScratchHeart({ label, value, onReveal }: ScratchHeartProps) {
       }}
     >
       <div className="absolute inset-0 flex flex-col justify-center items-center z-[1]">
-        <span style={{ fontFamily: "'Tenor Sans', sans-serif", fontSize: "0.55rem", letterSpacing: "0.15em", color: "#9E7060", textTransform: "uppercase", marginBottom: "2px" }}>
+        <span style={{ fontFamily: "'Tenor Sans', sans-serif", fontSize: "0.75rem", letterSpacing: "0.15em", color: "#9E7060", textTransform: "uppercase", marginBottom: "2px" }}>
           {label}
         </span>
-        <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2rem", fontWeight: 600, color: "#B85940", lineHeight: 1, textShadow: "0 2px 10px rgba(255,255,255,0.8)" }}>
+        <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "2.4rem", fontWeight: 600, color: "#B85940", lineHeight: 1, textShadow: "0 2px 10px rgba(255,255,255,0.8)" }}>
           {value}
         </span>
       </div>
@@ -178,7 +170,6 @@ function ScratchHeart({ label, value, onReveal }: ScratchHeartProps) {
 export function SaveTheDate() {
   const [revealedCount, setRevealedCount] = useState(0)
   const [allRevealed, setAllRevealed] = useState(false)
-  const countdownRef = useRef<NodeJS.Timeout | null>(null)
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, mins: 0, secs: 0 })
 
   const handleReveal = useCallback(() => {
@@ -186,38 +177,54 @@ export function SaveTheDate() {
   }, [])
 
   useEffect(() => {
-    if (revealedCount === 3 && !allRevealed) {
+    if (revealedCount === 3) {
       setAllRevealed(true)
 
       setTimeout(() => {
         const duration = 3000
         const end = Date.now() + duration
         const colors = ["#B85940", "#C9963E", "#E8C07A", "#FFFFFF"]
+
         const frame = () => {
           confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0, y: 0.6 }, colors, zIndex: 9999 })
           confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1, y: 0.6 }, colors, zIndex: 9999 })
+
           if (Date.now() < end) requestAnimationFrame(frame)
         }
+
         frame()
       }, 800)
-
-      const weddingDate = new Date("November 21, 2026 00:00:00").getTime()
-      const updateTimer = () => {
-        const now = Date.now()
-        const distance = weddingDate - now
-        if (distance < 0) { setCountdown({ days: 0, hours: 0, mins: 0, secs: 0 }); return }
-        setCountdown({
-          days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          mins: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-          secs: Math.floor((distance % (1000 * 60)) / 1000),
-        })
-      }
-      updateTimer()
-      countdownRef.current = setInterval(updateTimer, 1000)
     }
-    return () => { if (countdownRef.current) clearInterval(countdownRef.current) }
-  }, [revealedCount, allRevealed])
+  }, [revealedCount])
+
+  // ✅ ONLY FIX: ticking logic (fully isolated, no UI change)
+  useEffect(() => {
+    if (!allRevealed) return
+
+    const weddingDate = new Date("November 21, 2026 00:00:00").getTime()
+
+    const updateTimer = () => {
+      const now = Date.now()
+      const distance = weddingDate - now
+
+      if (distance < 0) {
+        setCountdown({ days: 0, hours: 0, mins: 0, secs: 0 })
+        return
+      }
+
+      setCountdown({
+        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        mins: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        secs: Math.floor((distance % (1000 * 60)) / 1000),
+      })
+    }
+
+    updateTimer()
+    const interval = setInterval(updateTimer, 1000)
+
+    return () => clearInterval(interval)
+  }, [allRevealed])
 
   const formatNumber = (n: number) => (n < 10 ? `0${n}` : `${n}`)
 
@@ -242,7 +249,6 @@ export function SaveTheDate() {
         <ScratchHeart label="YEAR" value="2026" onReveal={handleReveal} />
       </motion.div>
 
-      {/* FIX 3: Use AnimatePresence + key-based mount instead of animate prop toggling */}
       <AnimatePresence>
         {allRevealed && (
           <motion.div
