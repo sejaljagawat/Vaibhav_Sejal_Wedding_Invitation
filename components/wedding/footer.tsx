@@ -62,7 +62,7 @@ export function Footer() {
       >
         MADE WITH <span style={{ color: "#e74c3c" }}>&#9829;</span> BY{" "}
         <a
-          href="https://www.instagram.com/shahvaibhav_348"
+          href="https://www.instagram.com/shahvaibhav348"
           target="_blank"
           rel="noopener noreferrer"
           style={{ color: "#E8C07A", textDecoration: "none" }}
