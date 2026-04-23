@@ -140,8 +140,8 @@ function ScratchHeart({ label, value, onReveal }: ScratchHeartProps) {
       ref={containerRef}
       className="relative cursor-crosshair touch-none"
       style={{
-        width: "30vw",
-        maxWidth: "120px",
+        width: "35vw",
+        maxWidth: "140px",
         aspectRatio: "1.1 / 1",
         maskImage: HEART_MASK,
         maskSize: "contain",
