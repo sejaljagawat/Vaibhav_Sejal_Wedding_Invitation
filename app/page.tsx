@@ -13,7 +13,7 @@ import { EntryGate } from "@/components/wedding/entry-gate"
 import Intro from "@/components/wedding/intro"
 
 export default function WeddingPage() {
-  const [step, setStep] = useState<"gate" | "intro" | "main">("gate")
+  const [step, setStep] = useState<"gate" | "intro" | "main">("intro")
 
   const showMain = step === "main"
 
