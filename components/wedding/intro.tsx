@@ -115,9 +115,9 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
             animate={isLeaving ? { opacity: 0 } : { opacity: 1 }}
             transition={{ duration: 0.4 }}
           >
-            With the blessings of the Almighty & our respected elders,
+            We are thrilled to invite you to the joyous celebration of our unioin.
             <br />
-            we joyfully request your gracious presence on the wedding celebration of
+            Join us to experience unforgettable memories and laughter.
           </motion.p>
 
           {/* 📩 Save the Date */}
@@ -134,8 +134,25 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
               letterSpacing: "0.5px",
             }}
           >
-            Save the Date – Coming Soon
-            <br />
+            "Save the Date – Coming Soon..."
+
+          </motion.div>
+
+          {/* Click logo to reveal magic */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7, duration: 0.6 }}
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontStyle: "italic",
+              fontSize: "0.95rem",
+              color: "#C2185B",
+              textAlign: "center",
+              letterSpacing: "0.3px",
+              marginTop: "4px",
+            }}
+          >
             Click logo to reveal magic ✨
           </motion.div>
 
