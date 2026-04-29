@@ -10,14 +10,24 @@ import { Footer } from "@/components/wedding/footer"
 import { PetalsCanvas } from "@/components/wedding/petals-canvas"
 import { AudioToggle } from "@/components/wedding/audio-toggle"
 import { EntryGate } from "@/components/wedding/entry-gate"
+import Intro from "@/components/wedding/intro"
 
 export default function WeddingPage() {
-  const [showMain, setShowMain] = useState(false)
+  const [step, setStep] = useState<"gate" | "intro" | "main">("gate")
+
+  const showMain = step === "main"
 
   return (
     <>
-      {/* Entry Gate Video */}
-      {!showMain && <EntryGate onEnter={() => setShowMain(true)} />}
+      {/* Entry Gate */}
+      {step === "gate" && (
+        <EntryGate onEnter={() => setStep("intro")} />
+      )}
+
+      {/* Intro Screen */}
+      {step === "intro" && (
+        <Intro onFinish={() => setStep("main")} />
+      )}
 
       {/* Floating Petals */}
       <PetalsCanvas active={showMain} />
