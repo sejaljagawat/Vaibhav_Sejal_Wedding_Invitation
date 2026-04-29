@@ -7,13 +7,16 @@ import { useRef, useState } from "react"
 export default function Intro({ onFinish }: { onFinish: () => void }) {
   const [isLeaving, setIsLeaving] = useState(false)
   const [burst, setBurst] = useState(false)
+  const [locked, setLocked] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
 
   const handleEnter = () => {
-    if (isLeaving) return
+    if (locked) return
+    setLocked(true)
 
     setBurst(true)
     audioRef.current?.play()
+
     setIsLeaving(true)
 
     setTimeout(() => {
@@ -24,10 +27,10 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
   return (
     <motion.section
       onClick={handleEnter}
-      className="h-screen overflow-hidden flex items-center justify-center bg-gradient-to-br from-[#fdf6f0] to-[#f7efe5] px-4 relative cursor-pointer"
+      className="h-screen w-screen overflow-hidden flex items-center justify-center bg-gradient-to-br from-[#fdf6f0] to-[#f7efe5] px-4 relative cursor-pointer"
     >
 
-      {/* 🎵 Music */}
+      {/* 🎵 Background Music */}
       <audio ref={audioRef} src="/wedding-music.mp3" loop />
 
       {/* ✨ Gold Glow Burst */}
@@ -44,9 +47,9 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
         />
       )}
 
-      {/* 🧾 Card */}
+      {/* 🧾 CARD */}
       <motion.div
-        className="w-[92vw] max-w-md max-h-[92vh] overflow-hidden bg-white rounded-3xl shadow-xl px-5 py-6 text-center relative"
+        className="w-[92vw] max-w-md h-[85vh] bg-white rounded-3xl shadow-xl px-5 py-6 text-center relative overflow-hidden"
         animate={
           isLeaving
             ? { scale: 1.1, opacity: 0 }
@@ -58,12 +61,12 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
         {/* Decorative Border */}
         <div className="absolute inset-2 rounded-2xl border border-[#D4AF37]/40 pointer-events-none" />
 
-        {/* 🔥 Logo */}
+        {/* 🔥 LOGO */}
         <motion.div
           className="flex justify-center items-center w-full mb-6"
           animate={
             isLeaving
-              ? { scale: 2, y: -40, opacity: 0 }
+              ? { scale: 2.2, y: -40, opacity: 0 }
               : { scale: 1, y: 0, opacity: 1 }
           }
           transition={{ duration: 1.5, ease: "easeInOut" }}
@@ -81,7 +84,7 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
           </div>
         </motion.div>
 
-        {/* 💌 Blessings Text */}
+        {/* 💌 TEXT */}
         <motion.p
           className="px-2"
           style={{
