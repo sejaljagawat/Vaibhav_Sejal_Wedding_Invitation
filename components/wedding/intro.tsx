@@ -49,7 +49,7 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
 
       {/* 🧾 CARD */}
       <motion.div
-        className="w-[92vw] max-w-md h-[85vh] bg-white rounded-3xl shadow-xl px-5 py-6 text-center relative overflow-hidden"
+        className="w-[92vw] max-w-md h-[72vh] bg-white rounded-3xl shadow-xl px-5 py-6 text-center relative overflow-hidden"
         animate={
           isLeaving
             ? { scale: 1.1, opacity: 0 }
