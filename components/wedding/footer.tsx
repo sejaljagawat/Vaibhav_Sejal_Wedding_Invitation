@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import Image from "next/image"
 
 export function Footer() {
   return (
@@ -15,6 +16,19 @@ export function Footer() {
         transition={{ duration: 1.2 }}
         className="w-full"
       >
+
+        {/* 🔥 LOGO ADDED HERE (ONLY CHANGE) */}
+        <div className="flex justify-center mb-6">
+          <div className="relative w-[200px] h-[200px]">
+            <Image
+              src="/VS_Logo.png"
+              alt="Wedding Logo"
+              fill
+              className="object-contain scale-[2.7]"
+            />
+          </div>
+        </div>
+
         <span
           style={{
             fontFamily: "'Great Vibes', cursive",

@@ -95,7 +95,7 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
             transition={{ delay: 0.3, duration: 0.6 }}
             style={{
               fontFamily: "'Great Vibes', cursive",
-              fontSize: "1.6rem",
+              fontSize: "2rem",
               color: "#D4AF37",
               textAlign: "center",
             }}
