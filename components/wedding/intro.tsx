@@ -19,22 +19,21 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
         <div className="absolute inset-2 rounded-2xl border border-[#D4AF37]/40 pointer-events-none" />
 
         {/* Logo */}
-        {/* Logo */}
         <motion.div
           initial={{ scale: 0.7, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1 }}
-          className="flex justify-center items-center w-full mb-6"
+          className="flex justify-center items-center w-full mb-6 overflow-hidden"
         >
-          {/* Bigger container */}
-          <div className="relative w-[92vw] max-w-[500px] aspect-square flex items-center justify-center">
+          {/* Controlled frame box */}
+          <div className="relative w-[92vw] max-w-[500px] aspect-square flex items-center justify-center overflow-hidden">
 
             <Image
               src="/VS_Logo.png"
               alt="Wedding Logo"
               fill
               priority
-              className="object-contain scale-[2] translate-y-10"
+              className="object-contain scale-[2] translate-y-6"
             />
 
           </div>
