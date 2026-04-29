@@ -64,9 +64,10 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
         {/* 🔥 LOGO */}
         <motion.div
           className="flex justify-center items-center w-full mb-12 translate-y-4"
+          initial={{ opacity: 0, scale: 0.8, y: 40 }}
           animate={
             isLeaving
-              ? { scale: 2.2, y: -40, opacity: 0 }
+              ? { scale: 2.2, y: -50, opacity: 0 }
               : { scale: 1, y: 0, opacity: 1 }
           }
           transition={{ duration: 1.5, ease: "easeInOut" }}
@@ -112,8 +113,9 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
               lineHeight: 1.6,
               textAlign: "center",
             }}
+            initial={{ opacity: 0 }}
             animate={isLeaving ? { opacity: 0 } : { opacity: 1 }}
-            transition={{ duration: 0.4 }}
+            transition={{ delay: 0.6, duration: 0.5 }}
           >
             We are thrilled to invite you to the joyous celebration of our unioin.
             <br />
@@ -124,7 +126,7 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
             style={{
               fontFamily: "'Cormorant Garamond', serif",
               fontStyle: "italic",
