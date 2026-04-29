@@ -49,7 +49,7 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
 
       {/* 🧾 CARD */}
       <motion.div
-        className="w-[92vw] max-w-md h-[73vh] bg-white rounded-3xl shadow-xl px-5 py-6 text-center relative overflow-hidden"
+        className="w-[92vw] max-w-md h-[75vh] bg-transparent px-5 py-6 text-center relative overflow-hidden"
         animate={
           isLeaving
             ? { scale: 1.1, opacity: 0 }
@@ -78,7 +78,7 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
               alt="Wedding Logo"
               fill
               priority
-              className="object-contain scale-[2] translate-y-10"
+              className="object-contain scale-[2] translate-y-10 translate-x-3"
             />
 
           </div>
@@ -90,7 +90,7 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
           style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontStyle: "italic",
-            fontSize: "1.05rem",
+            fontSize: "1.1rem",
             color: "#5a3e2b",
             lineHeight: 1.6,
           }}
