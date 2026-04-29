@@ -27,7 +27,7 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
   return (
     <motion.section
       onClick={handleEnter}
-      className="h-screen w-screen overflow-hidden flex items-center justify-center bg-gradient-to-br from-[#fdf6f0] to-[#f7efe5] px-4 relative cursor-pointer"
+      className="h-screen w-screen overflow-hidden flex items-center justify-center bg-white px-4 relative cursor-pointer"
     >
 
       {/* 🎵 Background Music */}
@@ -49,7 +49,7 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
 
       {/* 🧾 CARD */}
       <motion.div
-        className="w-[92vw] max-w-md h-[75vh] bg-transparent px-5 py-6 text-center relative overflow-hidden"
+        className="w-[92vw] max-w-md h-[100svh] bg-transparent px-5 py-6 text-center relative overflow-hidden"
         animate={
           isLeaving
             ? { scale: 1.1, opacity: 0 }
@@ -78,7 +78,7 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
               alt="Wedding Logo"
               fill
               priority
-              className="object-contain scale-[2] translate-y-10 translate-x-3"
+              className="object-contain scale-[2.2] translate-y-10 translate-x-3"
             />
 
           </div>
