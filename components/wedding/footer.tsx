@@ -86,4 +86,4 @@ export function Footer() {
       </motion.div>
     </footer>
   )
-}
+} 
