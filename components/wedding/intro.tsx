@@ -63,7 +63,7 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
 
         {/* 🔥 LOGO */}
         <motion.div
-          className="flex justify-center items-center w-full mb-6"
+          className="flex justify-center items-center w-full mb-12 translate-y-4"
           animate={
             isLeaving
               ? { scale: 2.2, y: -40, opacity: 0 }
@@ -84,23 +84,62 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
           </div>
         </motion.div>
 
-        {/* 💌 TEXT */}
-        <motion.p
-          className="px-2"
-          style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontStyle: "italic",
-            fontSize: "1.1rem",
-            color: "#5a3e2b",
-            lineHeight: 1.6,
-          }}
-          animate={isLeaving ? { opacity: 0 } : { opacity: 1 }}
-          transition={{ duration: 0.4 }}
-        >
-          With the blessings of the Almighty & our respected elders,
-          <br />
-          we joyfully request your gracious presence on the wedding celebration of
-        </motion.p>
+        {/* 💞 ALL TEXT WITH EQUAL SPACING */}
+        <div className="flex flex-col items-center gap-5 mt-6">
+
+          {/* 💞 Hashtag */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+            style={{
+              fontFamily: "'Great Vibes', cursive",
+              fontSize: "1.6rem",
+              color: "#D4AF37",
+              textAlign: "center",
+            }}
+          >
+            #V ❤️SEraBegins
+          </motion.div>
+
+          {/* 💌 TEXT */}
+          <motion.p
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontStyle: "italic",
+              fontSize: "1.1rem",
+              color: "#5a3e2b",
+              lineHeight: 1.6,
+              textAlign: "center",
+            }}
+            animate={isLeaving ? { opacity: 0 } : { opacity: 1 }}
+            transition={{ duration: 0.4 }}
+          >
+            With the blessings of the Almighty & our respected elders,
+            <br />
+            we joyfully request your gracious presence on the wedding celebration of
+          </motion.p>
+
+          {/* 📩 Save the Date */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontStyle: "italic",
+              fontSize: "1.05rem",
+              color: "#5a3e2b",
+              textAlign: "center",
+              letterSpacing: "0.5px",
+            }}
+          >
+            Save the Date – Coming Soon
+            <br />
+            Click logo to reveal magic ✨
+          </motion.div>
+
+        </div>
 
       </motion.div>
     </motion.section>
