@@ -66,7 +66,7 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
               ? { scale: 2, y: -40, opacity: 0 }
               : { scale: 1, y: 0, opacity: 1 }
           }
-          transition={{ duration: 0.9, ease: "easeInOut" }}
+          transition={{ duration: 1.5, ease: "easeInOut" }}
         >
           <div className="relative w-[88vw] max-w-[420px] aspect-square flex items-center justify-center overflow-visible">
 
