@@ -2,44 +2,86 @@
 
 import { motion } from "framer-motion"
 import Image from "next/image"
+import { useRef, useState } from "react"
 
 export default function Intro({ onFinish }: { onFinish: () => void }) {
-  return (
-    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#fdf6f0] to-[#f7efe5] px-4">
+  const [isLeaving, setIsLeaving] = useState(false)
+  const [burst, setBurst] = useState(false)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
 
-      {/* Card */}
+  const handleEnter = () => {
+    if (isLeaving) return
+
+    setBurst(true)
+    audioRef.current?.play()
+    setIsLeaving(true)
+
+    setTimeout(() => {
+      onFinish()
+    }, 900)
+  }
+
+  return (
+    <motion.section
+      onClick={handleEnter}
+      className="h-screen overflow-hidden flex items-center justify-center bg-gradient-to-br from-[#fdf6f0] to-[#f7efe5] px-4 relative cursor-pointer"
+    >
+
+      {/* 🎵 Music */}
+      <audio ref={audioRef} src="/wedding-music.mp3" loop />
+
+      {/* ✨ Gold Glow Burst */}
+      {burst && (
+        <motion.div
+          className="absolute inset-0 pointer-events-none"
+          initial={{ scale: 0, opacity: 0.8 }}
+          animate={{ scale: 3, opacity: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          style={{
+            background:
+              "radial-gradient(circle, rgba(212,175,55,0.6) 0%, transparent 70%)",
+          }}
+        />
+      )}
+
+      {/* 🧾 Card */}
       <motion.div
-        className="w-full max-w-sm bg-white rounded-3xl shadow-xl px-6 py-10 text-center relative"
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
+        className="w-[92vw] max-w-md max-h-[92vh] overflow-hidden bg-white rounded-3xl shadow-xl px-5 py-6 text-center relative"
+        animate={
+          isLeaving
+            ? { scale: 1.1, opacity: 0 }
+            : { scale: 1, opacity: 1 }
+        }
         transition={{ duration: 0.8 }}
       >
 
         {/* Decorative Border */}
         <div className="absolute inset-2 rounded-2xl border border-[#D4AF37]/40 pointer-events-none" />
 
-        {/* Logo */}
+        {/* 🔥 Logo */}
         <motion.div
-          initial={{ scale: 0.7, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1 }}
-          className="flex justify-center items-center w-full mb-6 overflow-hidden"
+          className="flex justify-center items-center w-full mb-6"
+          animate={
+            isLeaving
+              ? { scale: 2, y: -40, opacity: 0 }
+              : { scale: 1, y: 0, opacity: 1 }
+          }
+          transition={{ duration: 0.9, ease: "easeInOut" }}
         >
-          {/* Controlled frame box */}
-          <div className="relative w-[92vw] max-w-[500px] aspect-square flex items-center justify-center overflow-hidden">
+          <div className="relative w-[88vw] max-w-[420px] aspect-square flex items-center justify-center overflow-visible">
 
             <Image
               src="/VS_Logo.png"
               alt="Wedding Logo"
               fill
               priority
-              className="object-contain scale-[2] translate-y-6"
+              className="object-contain scale-[2] translate-y-10"
             />
 
           </div>
         </motion.div>
 
-        {/* Blessings Text */}
+        {/* 💌 Blessings Text */}
         <motion.p
           className="px-2"
           style={{
@@ -49,25 +91,15 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
             color: "#5a3e2b",
             lineHeight: 1.6,
           }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
+          animate={isLeaving ? { opacity: 0 } : { opacity: 1 }}
+          transition={{ duration: 0.4 }}
         >
           With the blessings of the Almighty & our respected elders,
           <br />
           we joyfully request your gracious presence on the wedding celebration of
         </motion.p>
 
-        {/* Enter Button */}
-        <motion.button
-          onClick={onFinish}
-          className="mt-8 px-6 py-2 border border-[#D4AF37] text-[#D4AF37] rounded-full hover:bg-[#D4AF37] hover:text-white transition"
-          whileHover={{ scale: 1.05 }}
-        >
-          Open Invitation
-        </motion.button>
-
       </motion.div>
-    </section>
+    </motion.section>
   )
 }
