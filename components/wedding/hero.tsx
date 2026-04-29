@@ -118,9 +118,9 @@ export function Hero() {
             lineHeight: 1.5,
           }}
         >
-          With the blessings of the Almighty & our respected elders,
+          With the blessings of our families,
           <br />
-          we joyfully request your gracious presence on the wedding celebration of
+          We invite you to celebrate the wedding of
         </p>
 
         {/* Groom */}

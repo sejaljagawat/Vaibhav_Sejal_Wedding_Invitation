@@ -24,7 +24,7 @@ export function Footer() {
               src="/VS_Logo.png"
               alt="Wedding Logo"
               fill
-              className="object-contain scale-[2.7] translate-x-5"
+              className="object-contain scale-[2.7] translate-x-4"
             />
           </div>
         </div>
