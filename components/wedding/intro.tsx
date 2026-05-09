@@ -31,16 +31,25 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
     >
 
       {/* 🌸 TOP FLORAL BORDER */}
-      <div className="absolute top-0 left-0 w-full flex justify-center pointer-events-none z-0 overflow-hidden">
+      <motion.div
+        className="absolute top-0 left-0 w-full flex justify-center pointer-events-none z-0 overflow-hidden"
+        initial={{ opacity: 1 }}
+        animate={
+          isLeaving
+            ? { opacity: 0, y: -80, scale: 1.1 }
+            : { opacity: 1, y: 0, scale: 1 }
+        }
+        transition={{ duration: 0.8, ease: "easeInOut" }}
+      >
         <motion.img
           src="/Floral_top.png"
           alt="Floral Border"
-          className="w-full max-h-[280px] object-contain opacity-85 -translate-y-18"
+          className="w-full max-h-[280px] object-contain opacity-85 -translate-y-22 -translate-x-5"
           initial={{ scale: 0.9, opacity: 0, y: 40 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
         />
-      </div>
+      </motion.div>
 
       {/* 🎵 Background Music */}
       <audio ref={audioRef} src="/wedding-music.mp3" loop />
