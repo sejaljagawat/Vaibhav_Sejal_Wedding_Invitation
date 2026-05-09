@@ -30,6 +30,15 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
       className="h-screen w-screen overflow-hidden flex items-center justify-center bg-white px-4 relative cursor-pointer"
     >
 
+      {/* 🌸 TOP FLORAL BORDER (ADDED ONLY THIS) */}
+      <div className="absolute top-0 left-0 w-full flex justify-center pointer-events-none z-0">
+        <img
+          src="/Floral_top.png"
+          alt="Floral Border"
+          className="w-full max-h-[280px] object-contain opacity-85 -translate-y-11"
+        />
+      </div>
+
       {/* 🎵 Background Music */}
       <audio ref={audioRef} src="/wedding-music.mp3" loop />
 
