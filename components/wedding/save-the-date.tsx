@@ -158,7 +158,7 @@ function ScratchHeart({ label, value, onReveal }: ScratchHeartProps) {
         <span style={{ fontFamily: "'Tenor Sans', sans-serif", fontSize: "0.75rem", letterSpacing: "0.15em", color: "#9E7060", textTransform: "uppercase", marginBottom: "2px" }}>
           {label}
         </span>
-        <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "2rem", fontWeight: 600, color: "#B85940", lineHeight: 1, textShadow: "0 2px 10px rgba(255,255,255,0.8)" }}>
+        <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.8rem", fontWeight: 600, color: "#B85940", lineHeight: 1, textShadow: "0 2px 10px rgba(255,255,255,0.8)" }}>
           {value}
         </span>
       </div>
