@@ -24,9 +24,42 @@ export function RSVP() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitted(true);
+
+    try {
+      const response = await fetch("/api/rsvp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          mood: formData.mood.join(", "),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!data.success) {
+        throw new Error("Failed");
+      }
+
+      setIsSubmitted(true);
+
+      setFormData({
+        name: "",
+        phone: "",
+        emotional: "",
+        mood: [],
+        wishes: "",
+        advice: "",
+      });
+
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong");
+    }
   };
 
   return (
@@ -141,8 +174,8 @@ export function RSVP() {
                       type="button"
                       onClick={() => setFormData({ ...formData, emotional: option.value })}
                       className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all ${formData.emotional === option.value
-                          ? "bg-gold text-card border-gold"
-                          : "border-border hover:border-gold"
+                        ? "bg-gold text-card border-gold"
+                        : "border-border hover:border-gold"
                         }`}
                     >
                       <span className="w-8 h-8 rounded-full bg-rose-light flex items-center justify-center text-sm font-bold text-primary">
@@ -177,8 +210,8 @@ export function RSVP() {
                       type="button"
                       onClick={() => handleMoodToggle(mood)}
                       className={`px-4 py-2 rounded-full border text-sm font-serif transition-all ${formData.mood.includes(mood)
-                          ? "bg-gold text-card border-gold"
-                          : "border-border hover:border-gold"
+                        ? "bg-gold text-card border-gold"
+                        : "border-border hover:border-gold"
                         }`}
                     >
                       {mood}
