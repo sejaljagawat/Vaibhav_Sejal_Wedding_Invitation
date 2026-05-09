@@ -34,7 +34,7 @@ const events = [
   {
     date: "20th Nov, 2026",
     time: "7 PM Onwards",
-    name: "Procession/ Binola",
+    name: "Procession / Binola",
     venue: "Home, Indore",
     mapsQuery: "22.702944,75.826889",
     image: "https://i.ibb.co/rfNP0YNh/binola.jpg",
