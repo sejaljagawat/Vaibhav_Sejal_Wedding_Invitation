@@ -44,7 +44,7 @@ export default function Intro({ onFinish }: { onFinish: () => void }) {
         <motion.img
           src="/Floral_top.png"
           alt="Floral Border"
-          className="w-full max-h-[280px] object-contain opacity-85 -translate-y-22 -translate-x-5"
+          className="w-full max-h-[280px] object-contain opacity-85 -translate-y-22 -translate-x-1"
           initial={{ scale: 0.9, opacity: 0, y: 40 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
