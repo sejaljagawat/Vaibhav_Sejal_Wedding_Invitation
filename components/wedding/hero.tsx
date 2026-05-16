@@ -159,7 +159,7 @@ export function Hero() {
               marginTop: "0.2rem",
             }}
           >
-            (Grandson of Late Shankar Lalji Shah & Late Smt. Suryakanta Shah)
+            (Grandson of Late Shri Shankar Lalji Shah & Late Smt. Suryakanta Shah)
           </p>
         </div>
 

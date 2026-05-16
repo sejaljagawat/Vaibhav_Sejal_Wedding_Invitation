@@ -6,7 +6,7 @@ import { MapPin, Clock } from "lucide-react";
 const events = [
   {
     date: "19th Nov, 2026",
-    time: "10 AM",
+    time: "10 AM Onwards",
     name: "Haldi",
     venue: "Kanha Shree Garden, Indore",
     mapsQuery: "Kanha+Shree+Garden+Indore",
@@ -24,7 +24,7 @@ const events = [
   },
   {
     date: "20th Nov, 2026",
-    time: "9 AM",
+    time: "9 AM Onwards",
     name: "Ganesh Puja & Mayra",
     venue: "Home, Indore",
     mapsQuery: "22.702944,75.826889",

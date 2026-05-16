@@ -61,10 +61,6 @@ export function Gallery() {
                   e.currentTarget.style.display = "none";
                 }}
               />
-              {/* Fallback decorative content */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-6xl text-gold/30">♥</span>
-              </div>
             </motion.div>
           ))}
         </motion.div>
