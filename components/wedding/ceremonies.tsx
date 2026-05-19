@@ -5,11 +5,11 @@ import { MapPin, Clock } from "lucide-react";
 
 const events = [
   {
-    date: "19th Nov, 2026",
+    date: "18th Nov, 2026",
     time: "10 AM Onwards",
     name: "Haldi",
-    venue: "Kanha Shree Garden, Indore",
-    mapsQuery: "Kanha+Shree+Garden+Indore",
+    venue: "Motagaon, Rajasthan",
+    mapsQuery: "Motagaon+Rajasthan",
     image: "https://i.ibb.co/4whj8XsC/Haldi.jpg",
     imageAlt: "Haldi ceremony with turmeric paste and flowers",
   },
