@@ -28,8 +28,8 @@ const pinyonScript = Pinyon_Script({
 });
 
 export const metadata: Metadata = {
-  title: 'Vaibhav & Sejal — A Sacred Union',
-  description: 'Join us in celebrating the wedding of Vaibhav and Sejal',
+  title: 'Vaibhav & Sejal Wedding Invite',
+  description: 'Join us in the wedding of VS',
   generator: 'v0.app',
   icons: {
     icon: [
