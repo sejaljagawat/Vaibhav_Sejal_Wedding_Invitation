@@ -31,22 +31,33 @@ export const metadata: Metadata = {
   title: 'Vaibhav & Sejal Wedding Invite',
   description: 'Join us in the wedding of VS',
   generator: 'v0.app',
+
+  // Browser + device icons
   icons: {
-    icon: [
+    icon: '/VS_Logo.png',
+    apple: '/VS_Logo.png',
+  },
+
+  // Social media preview (WhatsApp, Telegram, LinkedIn, etc.)
+  openGraph: {
+    title: 'Vaibhav & Sejal Wedding Invite',
+    description: 'Join us in the wedding of VS',
+    images: [
       {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
+        url: '/VS_Logo.png',
+        width: 1200,
+        height: 630,
       },
     ],
-    apple: '/apple-icon.png',
+    type: 'website',
+  },
+
+  // Twitter/X preview
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Vaibhav & Sejal Wedding Invite',
+    description: 'Join us in the wedding of VS',
+    images: ['/VS_Logo.png'],
   },
 }
 
